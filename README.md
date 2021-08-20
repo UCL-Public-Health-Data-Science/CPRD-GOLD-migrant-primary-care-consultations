@@ -8,6 +8,7 @@
 ## Data source
 
 Data used in this study were provided by the Clinical Practice Research Datalink (CPRD). CPRD GOLD data were linked to Office for National Statistics Index of Multiple Deprivation (IMD) data.  
+
 Researchers can only access this data through a direct research application to the CPRD. 
 
 ## Requirements
