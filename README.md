@@ -2,7 +2,7 @@
 
 ## Project Description
 
-* This repository contains the code and codelists from the paper '_____'.
+* This repository contains the code and codelists from the paper 'Migrants’ primary care utilisation before and during the COVID-19 pandemic in England: An interrupted time series'.
 * The coding scripts in this repository were used to clean and analyse the data to produce the results outlined in the paper.
 
 ## Data source
