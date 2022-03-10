@@ -13,7 +13,7 @@ pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, MASS, psy
 
 ## 2_Set working directory ------------------------------------------------------------------
 
-setwd("S:/CALIBER_19_062R/01_gold/01_all_patients")
+setwd("filepath")
 
 ## 3_Load datasets and functions ------------------------------------------------------
 
