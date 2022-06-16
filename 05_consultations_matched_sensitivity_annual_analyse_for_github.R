@@ -105,7 +105,7 @@ extract_glm_results_agesubcohorts <- function (x, output_name, subcohort, datase
 
 ## Load dataset and select variables ----
 
-load(file = "filepath/matched_cohort_England_2015_2020_annual_conscounts_test_ds.Rdata")
+load(file = "filepath")
 
 # Matched on age_data_start, year_data_start and prac_region 
 
@@ -189,7 +189,7 @@ conscount_summary_overall_2 <- conscount_summary_overall_2 %>% relocate(age_subc
 matched_conscount_summary_fullperiod_ds <- bind_rows(conscount_summary_overall_1,conscount_summary_overall_2)
 
 # save file
-write_csv(matched_conscount_summary_fullperiod_ds, "filepath/matched_conscount_summary_fullperiod_ds.csv" )
+write_csv(matched_conscount_summary_fullperiod_ds, "filepath" )
 
 ### Annual
 
@@ -260,7 +260,7 @@ conscount_summary_annual_2 <- conscount_summary_annual_2 %>% relocate(age_subcoh
 matched_conscount_summary_annual_ds <- bind_rows(conscount_summary_annual_1,conscount_summary_annual_2)
 
 ## Export  summary measures
-write_csv(matched_conscount_summary_annual_ds, "results/01_Consultations/matched_cohort/matched_conscount_summary_annual_ds.csv" )
+write_csv(matched_conscount_summary_annual_ds, "filepath" )
 
 ## IRs by migrant_status + studyyear (not included in paper) -----
 
@@ -297,7 +297,7 @@ IR_migstatus_studyyear <- arrange(IR_migstatus_studyyear, migrant_status, age_su
 # IR_migstatus_studyyear <- arrange(IR_migstatus_studyyear, studyyear) %>%
 #   relocate(age_subcohort)
 
-write_csv(IR_migstatus_studyyear, "results/01_Consultations/matched_cohort/matched_migstatus_studyyear_ds.csv")
+write_csv(IR_migstatus_studyyear, "filepath")
 
 ## IR & univariable IRR by migrant status ----------------------------------------------------------------------
 
@@ -321,7 +321,7 @@ x <- glm.nb(conscount ~ as.factor(migrant_status) + offset(log(pyears)), data = 
 extract_glm_results_allages(x, 'glm_mig', matched_cohort_England_2015_2020_annual_conscounts_test_ds, migrant_status)
 round(ci.lin(x,Exp=T),3)
 
-save(glm_mig, file="filepath/matched_cohort/matched_glm_mig_ds.Rdata")
+save(glm_mig, file="filepath")
 
 # Join glm + IR + univariable_mig 
 univariable_migrant_status <- full_join(IR_allpatients_overall_migstatus, glm_mig_table, by = c("age_subcohort" = "age_subcohort","migrant_status" = "names")) %>%
@@ -387,7 +387,7 @@ univariable_migrant_status$age_subcohort <- factor(univariable_migrant_status$ag
 ## Reorder results (can change depending on how we want to present it)
 univariable_migrant_status_ds <- arrange(univariable_migrant_status, migrant_status, age_subcohort)
 
-write_csv(univariable_migrant_status_ds, "results/01_Consultations/matched_cohort/matched_univariable_migrant_status_ds.csv")
+write_csv(univariable_migrant_status_ds, "filepath")
 
 ## Multivariable model by migrant_status with IMD adjustment  ----
 
@@ -448,16 +448,16 @@ round(ci.lin(x,Exp=T),3)
 multivariable_matched_migrant_status_ds <- bind_rows(multivariable_matched_allages_table, glm_multivariable_matched_0to15_table,glm_multivariable_matched_16to24_table,
                                                   glm_multivariable_matched_25to34_table,glm_multivariable_matched_35to49_table,glm_multivariable_matched_50to64_table,glm_multivariable_matched_65plus_table)
 
-write_csv(multivariable_matched_migrant_status_ds, "results/01_Consultations/matched_cohort/matched_multivariable_migrant_status_ds.csv")
+write_csv(multivariable_matched_migrant_status_ds, "filepath")
 
 # Save .Rdata for forestplots
-save(multivariable_matched_allages, file="filepath/multivariable_matched_allages_ds.Rdata")
-save(glm_multivariable_matched_0to15, file="filepath/glm_multivariable_matched_0to15_ds.Rdata")
-save(glm_multivariable_matched_16to24, file="filepath/glm_multivariable_matched_16to24_ds.Rdata")
-save(glm_multivariable_matched_25to34, file="filepath/glm_multivariable_matched_25to34_ds.Rdata")
-save(glm_multivariable_matched_35to49, file="filepath/glm_multivariable_matched_35to49_ds.Rdata")
-save(glm_multivariable_matched_50to64, file="filepath/glm_multivariable_matched_50to64_ds.Rdata")
-save(glm_multivariable_matched_65plus, file="filepath/glm_multivariable_matched_65plus_ds.Rdata")
+save(multivariable_matched_allages, file="filepath")
+save(glm_multivariable_matched_0to15, file="filepath")
+save(glm_multivariable_matched_16to24, file="filepath")
+save(glm_multivariable_matched_25to34, file="filepath")
+save(glm_multivariable_matched_35to49, file="filepath")
+save(glm_multivariable_matched_50to64, file="filepath")
+save(glm_multivariable_matched_65plus, file="filepath")
 
 ## Multivariable model by migrant_status without IMD adjustment  ----
 
@@ -512,22 +512,22 @@ extract_glm_results_agesubcohorts(x, "glm_multivariable_matched_65plus", ">=65 y
 multivariable_matched_migrant_status_noIMD_ds <- bind_rows(multivariable_matched_allages_table, glm_multivariable_matched_0to15_table,glm_multivariable_matched_16to24_table,
                                                   glm_multivariable_matched_25to34_table,glm_multivariable_matched_35to49_table,glm_multivariable_matched_50to64_table,glm_multivariable_matched_65plus_table)
 
-write_csv(multivariable_matched_migrant_status_noIMD_ds, "results/01_Consultations/matched_cohort/matched_multivariable_migrant_status_noIMD_ds.csv")
+write_csv(multivariable_matched_migrant_status_noIMD_ds, "filepath")
 
 # Save .Rdata for forestplots
-save(multivariable_matched_allages, file="filepath/matched_multivariable_allages_ds.Rdata")
-save(glm_multivariable_matched_0to15, file="filepath/matched_glm_multivariable_0to15_ds.Rdata")
-save(glm_multivariable_matched_16to24, file="filepath/matched_glm_multivariable_16to24_ds.Rdata")
-save(glm_multivariable_matched_25to34, file="filepath/matched_glm_multivariable_25to34_ds.Rdata")
-save(glm_multivariable_matched_35to49, file="filepath/matched_glm_multivariable_35to49_ds.Rdata")
-save(glm_multivariable_matched_50to64, file="filepath/matched_glm_multivariable_50to64_ds.Rdata")
-save(glm_multivariable_matched_65plus, file="filepath/matched_glm_multivariable_65plus_ds.Rdata")
+save(multivariable_matched_allages, file="filepath")
+save(glm_multivariable_matched_0to15, file="filepath")
+save(glm_multivariable_matched_16to24, file="filepath")
+save(glm_multivariable_matched_25to34, file="filepath")
+save(glm_multivariable_matched_35to49, file="filepath")
+save(glm_multivariable_matched_50to64, file="filepath")
+save(glm_multivariable_matched_65plus, file="filepath")
 
 ## Analyses not included in paper ------
 ### Certainty of migration status  ----
 
 # Reload to include 2020
-load(file = "filepath/matched_cohort_England_2015_2020_annual_conscounts_test_ds.Rdata")
+load(file = "filepath")
 
 matched_cohort_England_2015_2020_annual_conscounts_test_ds <- dplyr::select(matched_cohort_England_2015_2020_annual_conscounts_test_ds, 
                                                                     c(patid, pyears, conscount, migrant_status,
@@ -573,7 +573,7 @@ IR_migcertainty_studyyear <- full_join(IR_allpatients_overall_migcertainty_study
 IR_migcertainty_studyyear_ds <- arrange(IR_migcertainty_studyyear, migcertainty, age_subcohort) %>%
   relocate(age_subcohort)
 
-write_csv(IR_migcertainty_studyyear_ds, "results/01_Consultations/matched_cohort/matched_IR_migcertainty_studyyear_ds.csv")
+write_csv(IR_migcertainty_studyyear_ds, "results")
 
 # Filter out 2020 for modelling
 matched_cohort_England_2015_2020_annual_conscounts_test_ds <- matched_cohort_England_2015_2020_annual_conscounts_test_ds %>%
@@ -596,7 +596,7 @@ IR_allpatients_overall_migcertainty$age_subcohort <- 'All_ages'
 x <- glm.nb(conscount ~ as.factor(migcertainty) + offset(log(pyears)), data = matched_cohort_England_2015_2020_annual_conscounts_test_ds)
 extract_glm_results_allages(x, 'glm_migcertainty', matched_cohort_England_2015_2020_annual_conscounts_test_ds, migcertainty)
 
-save(glm_migcertainty, file="filepath/matched_glm_migcertainty_ds.Rdata")
+save(glm_migcertainty, file="filepath")
 
 # Join glm + IR + univariable_mig 
 univariable_migcertainty <- full_join(IR_allpatients_overall_migcertainty, glm_migcertainty_table, by = c("age_subcohort" = "age_subcohort","migcertainty" = "names")) %>%
@@ -656,7 +656,7 @@ univariable_migcertainty$age_subcohort <- factor(univariable_migcertainty$age_su
 univariable_migcertainty_ds <- arrange(univariable_migcertainty, age_subcohort)
 
 
-write_csv(univariable_migcertainty_ds, "results/01_Consultations/matched_cohort/matched_univariable_migcertainty_ds.csv")
+write_csv(univariable_migcertainty_ds, "results")
 
 ## Multivariable model controlling for year + gender + as.factor(studyyear_agecat) + as.factor(imd) + prac_region
 
@@ -711,16 +711,16 @@ multivariable_migcertainty_ds <- bind_rows(multivariable_migcertainty_allages_ta
                                         glm_multivariable_migcertainty_25to34_table,glm_multivariable_migcertainty_35to49_table,glm_multivariable_migcertainty_50to64_table,glm_multivariable_migcertainty_65plus_table)
 
 
-write_csv(multivariable_migcertainty_ds, "results/01_Consultations/matched_cohort/matched_multivariable_migcertainty_ds.csv")
+write_csv(multivariable_migcertainty_ds, "filepath")
 
 # Save .Rdata for forestplots
-save(multivariable_migcertainty_allages, file="filepath/matched_multivariable_migcertainty_allages_ds.Rdata")
-save(glm_multivariable_migcertainty_0to15, file="filepath/matched_glm_multivariable_migcertainty_0to15_ds.Rdata")
-save(glm_multivariable_migcertainty_16to24, file="filepath/matched_glm_multivariable_migcertainty_16to24_ds.Rdata")
-save(glm_multivariable_migcertainty_25to34, file="filepath/matched_glm_multivariable_migcertainty_25to34_ds.Rdata")
-save(glm_multivariable_migcertainty_35to49, file="filepath/matched_glm_multivariable_migcertainty_35to49_ds.Rdata")
-save(glm_multivariable_migcertainty_50to64, file="filepath/matched_glm_multivariable_migcertainty_50to64_ds.Rdata")
-save(glm_multivariable_migcertainty_65plus, file="filepath/matched_glm_multivariable_migcertainty_65plus_ds.Rdata")
+save(multivariable_migcertainty_allages, file="filepath")
+save(glm_multivariable_migcertainty_0to15, file="filepath")
+save(glm_multivariable_migcertainty_16to24, file="filepath")
+save(glm_multivariable_migcertainty_25to34, file="filepath")
+save(glm_multivariable_migcertainty_35to49, file="filepath")
+save(glm_multivariable_migcertainty_50to64, file="filepath")
+save(glm_multivariable_migcertainty_65plus, file="filepath")
 
 
 ### Ethnicity (ethnicat6) - interaction term, additive and multiplicative effects ----
@@ -734,8 +734,8 @@ x <- glm.nb(conscount ~ as.factor(migrant_status)*as.factor(ethnicat6) + as.fact
 extract_glm_results_allages(x, 'multivariable_ethnicat6interaction_allages', matched_cohort_England_2015_2020_annual_conscounts_test_ds, migrant_status)
 
 # Save .Rdata for forestplots
-save(multivariable_ethnicat6interaction_allages, file="filepath/matched_multivariable_ethnicat6interaction_allages_ds.Rdata")
-write_csv(multivariable_ethnicat6interaction_allages, "filepath/matched_multivariable_ethnicat6interaction_allages_ds.csv")
+save(multivariable_ethnicat6interaction_allages, file="filepath")
+write_csv(multivariable_ethnicat6interaction_allages, "filepath")
 
 # RR (95% CI) for non-migrants in each ethnicity compared to White British non-migrants
 # For table
@@ -762,49 +762,49 @@ get_RR_and_95_CI <- function(dataframe) {
 ## White British migrants 
 white_migrant_vsWBNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1), conf=.95))
 get_RR_and_95_CI(white_migrant_vsWBNM)
-save(white_migrant_vsWBNM, file="filepath/matched_white_migrant_vsWBNM_ds.Rdata")
+save(white_migrant_vsWBNM, file="filepath")
 white_migrant <- white_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 # White non-British migrants 
 white_nonbritish_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)White non-British' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)White non-British' = 1), conf=.95))
 get_RR_and_95_CI(white_nonbritish_migrant_vsWBNM)
-save(white_nonbritish_migrant_vsWBNM, file="filepath/matched_white_nonbritish_migrant_vsWBNM_ds.Rdata")
+save(white_nonbritish_migrant_vsWBNM, file="filepath")
 white_nonbritish_migrant <- white_nonbritish_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Black migrants 
 black_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Black/African/Caribbean/Black British' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Black/African/Caribbean/Black British' = 1), conf=.95))
 get_RR_and_95_CI(black_migrant_vsWBNM)
-save(black_migrant_vsWBNM, file="filepath/matched_black_migrant_vsWBNM_ds.Rdata")
+save(black_migrant_vsWBNM, file="filepath")
 black_migrant <- black_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Asian
 asian_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Asian/Asian British' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Asian/Asian British' = 1), conf=.95))
 get_RR_and_95_CI(asian_migrant_vsWBNM)
-save(asian_migrant_vsWBNM, file="filepath/matched_asian_migrant_vsWBNM_ds.Rdata")
+save(asian_migrant_vsWBNM, file="filepath")
 asian_migrant <- asian_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Mixed
 mixed_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Mixed/Multiple ethnic groups' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Mixed/Multiple ethnic groups' = 1), conf=.95))
 get_RR_and_95_CI(mixed_migrant_vsWBNM)
-save(mixed_migrant_vsWBNM, file="filepath/matched_mixed_migrant_vsWBNM_ds.Rdata")
+save(mixed_migrant_vsWBNM, file="filepath")
 mixed_migrant <- mixed_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Other
 other_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Other ethnic group' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Other ethnic group' = 1), conf=.95))
 get_RR_and_95_CI(other_migrant_vsWBNM)
-save(other_migrant_vsWBNM, file="filepath/matched_other_migrant_vsWBNM_ds.Rdata")
+save(other_migrant_vsWBNM, file="filepath")
 other_migrant <- other_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Unknown
 unknown_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Unknown' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Unknown' = 1), conf=.95))
 get_RR_and_95_CI(unknown_migrant_vsWBNM)
-save(unknown_migrant_vsWBNM, file="filepath/matched_unknown_migrant_vsWBNM_ds.Rdata")
+save(unknown_migrant_vsWBNM, file="filepath")
 unknown_migrant <- unknown_migrant_vsWBNM %>%
   dplyr::select(RR)
 
@@ -812,49 +812,49 @@ unknown_migrant <- unknown_migrant_vsWBNM %>%
 ## White
 white_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1), conf=.95))
 get_RR_and_95_CI(white_strata_vsNM)
-save(white_strata_vsNM, file="filepath/matched_white_strata_vsNM_ds.Rdata")
+save(white_strata_vsNM, file="filepath")
 white_strata <- white_strata_vsNM %>%
   dplyr::select(RR)
 
 ## White non-British
 white_nonbritish_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)White non-British' = 1), conf=.95))
 get_RR_and_95_CI(white_nonbritish_strata_vsNM)
-save(white_nonbritish_strata_vsNM, file="filepath/matched_white_nonbritish_strata_vsNM_ds.Rdata")
+save(white_nonbritish_strata_vsNM, file="filepath")
 white_nonbritish_strata <- white_nonbritish_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Black
 black_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Black/African/Caribbean/Black British' = 1), conf=.95))
 get_RR_and_95_CI(black_strata_vsNM)
-save(black_strata_vsNM, file="filepath/matched_black_strata_vsNM_ds.Rdata")
+save(black_strata_vsNM, file="filepath")
 black_strata <- black_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Asian
 asian_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Asian/Asian British' = 1), conf=.95))
 get_RR_and_95_CI(asian_strata_vsNM)
-save(asian_strata_vsNM, file="filepath/matched_asian_strata_vsNM_ds.Rdata")
+save(asian_strata_vsNM, file="filepath")
 asian_strata <- asian_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Mixed
 mixed_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Mixed/Multiple ethnic groups' = 1), conf=.95))
 get_RR_and_95_CI(mixed_strata_vsNM)
-save(mixed_strata_vsNM, file="filepath/matched_mixed_strata_vsNM_ds.Rdata")
+save(mixed_strata_vsNM, file="filepath")
 mixed_strata <- mixed_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Other
 other_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Other ethnic group' = 1), conf=.95))
 get_RR_and_95_CI(other_strata_vsNM)
-save(other_strata_vsNM, file="filepath/matched_other_strata_vsNM_ds.Rdata")
+save(other_strata_vsNM, file="filepath")
 other_strata <- other_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Unknown
 unknown_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Unknown' = 1), conf=.95))
 get_RR_and_95_CI(unknown_strata_vsNM)
-save(unknown_strata_vsNM, file="filepath/matched_unknown_strata_vsNM_ds.Rdata")
+save(unknown_strata_vsNM, file="filepath")
 unknown_strata <- unknown_strata_vsNM %>%
   dplyr::select(RR)
 
@@ -875,7 +875,7 @@ matched_ethnicity_table <- matched_ethnicity_table %>%
   dplyr::select(Ethnicity, RR_nonmigrantsVsWBNM, RR_migrantsVsWBNM, RR_MvsNM_each_ethnicity)
 
 # Save dataframe for knitting in RMD file
-save(matched_ethnicity_table, file="filepath/matched_ethnicity_interactions_table_ds.Rdata")
+save(matched_ethnicity_table, file="filepath")
 
 ### Additive and multiplicative interaction effects for each ethnicity 
 # Based on Mathur MB & VanderWeele TJ (2018). R function for additive interaction measures. Epidemiology 29(1), e5-e6
@@ -1149,7 +1149,7 @@ int_effects_all_ethnicities_ds <- bind_rows(interaction_effects_white_non_britis
                                          interaction_effects_asian, interaction_effects_mixed, 
                                          interaction_effects_other, interaction_effects_unknown)
 
-write_csv(int_effects_all_ethnicities_ds, "filepath/matched_int_effects_all_ethnicities_ds.csv")
+write_csv(int_effects_all_ethnicities_ds, "filepath")
 
 ### London only  ----
 
@@ -1164,7 +1164,7 @@ exact_match_London_annual_conscounts <- matched_cohort_England_2015_2020_annual_
 x <- glm.nb(conscount ~ as.factor(migrant_status) + offset(log(pyears)), data = exact_match_London_annual_conscounts)
 extract_glm_results_allages(x, 'London_glm_mig', exact_match_London_annual_conscounts, migrant_status)
 
-write_csv(London_glm_mig_table, "results/01_Consultations/matched_cohort/matched_London_univariable_migrant_status_ds.csv")
+write_csv(London_glm_mig_table, "filepath")
 
 
 # IRR (multivariable glm)
@@ -1218,7 +1218,7 @@ London_multivariable_migrant_status_ds <- bind_rows(London_multivariable_allages
                                                  London_glm_multivariable_25to34_table,London_glm_multivariable_35to49_table,London_glm_multivariable_50to64_table,London_glm_multivariable_65plus_table)
 
 
-write_csv(London_multivariable_migrant_status_ds, "results/01_Consultations/matched_cohort/matched_London_multivariable_migrant_status_ds.csv")
+write_csv(London_multivariable_migrant_status_ds, "filepath")
 
 ### Study year  ----
 
@@ -1278,7 +1278,7 @@ extract_glm_results_agesubcohorts(x, "glm_2015_multivariable_65plus", ">=65 year
 multivariable_2015_migrant_status_ds <- bind_rows(multivariable_2015_allages_table, glm_2015_multivariable_0to15_table,glm_2015_multivariable_16to24_table,
                                                glm_2015_multivariable_25to34_table,glm_2015_multivariable_35to49_table,glm_2015_multivariable_50to64_table,glm_2015_multivariable_65plus_table)
 
-write_csv(multivariable_2015_migrant_status_ds, "results/01_Consultations/matched_cohort/matched multivariable_2015_migrant_status_ds.csv")
+write_csv(multivariable_2015_migrant_status_ds, "filepath")
 
 ## 2016
 
@@ -1335,7 +1335,7 @@ multivariable_2016_migrant_status_ds <- bind_rows(multivariable_2016_allages_tab
                                                glm_2016_multivariable_25to34_table,glm_2016_multivariable_35to49_table,glm_2016_multivariable_50to64_table,glm_2016_multivariable_65plus_table)
 
 
-write_csv(multivariable_2016_migrant_status_ds, "results/01_Consultations/matched_cohort/matched multivariable_2016_migrant_status_ds.csv")
+write_csv(multivariable_2016_migrant_status_ds, "filepath")
 
 ## 2017
 
@@ -1392,7 +1392,7 @@ multivariable_2017_migrant_status_ds <- bind_rows(multivariable_2017_allages_tab
                                                glm_2017_multivariable_25to34_table,glm_2017_multivariable_35to49_table,glm_2017_multivariable_50to64_table,glm_2017_multivariable_65plus_table)
 
 
-write_csv(multivariable_2017_migrant_status_ds, "results/01_Consultations/matched_cohort/matched multivariable_2017_migrant_status_ds.csv")
+write_csv(multivariable_2017_migrant_status_ds, "filepath")
 
 ## 2018
 
@@ -1449,7 +1449,7 @@ multivariable_2018_migrant_status_ds <- bind_rows(multivariable_2018_allages_tab
                                                glm_2018_multivariable_25to34_table,glm_2018_multivariable_35to49_table,glm_2018_multivariable_50to64_table,glm_2018_multivariable_65plus_table)
 
 
-write_csv(multivariable_2018_migrant_status_ds, "results/01_Consultations/matched_cohort/matched multivariable_2018_migrant_status_ds.csv")
+write_csv(multivariable_2018_migrant_status_ds, "filepath")
 
 ## 2019
 
@@ -1506,13 +1506,13 @@ multivariable_2019_migrant_status_ds <- bind_rows(multivariable_2019_allages_tab
                                                glm_2019_multivariable_25to34_table,glm_2019_multivariable_35to49_table,glm_2019_multivariable_50to64_table,glm_2019_multivariable_65plus_table)
 
 
-write_csv(multivariable_2019_migrant_status_ds, "results/01_Consultations/matched_cohort/matched multivariable_2019_migrant_status_ds.csv")
+write_csv(multivariable_2019_migrant_status_ds, "filepath")
 
 # 5_Sensitivity analysis 2 -MATCHED ON: pyears and prac_region -------
 
 ## Load dataset and select variables ----
 
-load(file = "filepath/matched_cohort_England_2015_2020_annual_conscounts_fu.Rdata")
+load(file = "filepath")
 
 # Matched on age_data_start, year_data_start and prac_region 
 
@@ -1595,7 +1595,7 @@ conscount_summary_overall_2 <- conscount_summary_overall_2 %>% relocate(age_subc
 matched_conscount_summary_fullperiod_fu <- bind_rows(conscount_summary_overall_1,conscount_summary_overall_2)
 
 # save file
-write_csv(matched_conscount_summary_fullperiod_fu, "filepath/matched_conscount_summary_fullperiod_fu.csv" )
+write_csv(matched_conscount_summary_fullperiod_fu, "filepath" )
 
 ### Annual
 
@@ -1666,7 +1666,7 @@ conscount_summary_annual_2 <- conscount_summary_annual_2 %>% relocate(age_subcoh
 matched_conscount_summary_annual_fu <- bind_rows(conscount_summary_annual_1,conscount_summary_annual_2)
 
 ## Export  summary measures
-write_csv(matched_conscount_summary_annual_fu, "results/01_Consultations/matched_cohort/matched_conscount_summary_annual_fu.csv" )
+write_csv(matched_conscount_summary_annual_fu, "filepath" )
  
 ## IRs by migrant_status + studyyear (not included in paper) -----
 
@@ -1703,7 +1703,7 @@ IR_migstatus_studyyear <- arrange(IR_migstatus_studyyear, migrant_status, age_su
 # IR_migstatus_studyyear <- arrange(IR_migstatus_studyyear, studyyear) %>%
 #   relocate(age_subcohort)
 
-write_csv(IR_migstatus_studyyear, "results/01_Consultations/matched_cohort/matched_migstatus_studyyear_fu.csv")
+write_csv(IR_migstatus_studyyear, "filepath")
 
 ## IR & univariable IRR by migrant status ----------------------------------------------------------------------
 
@@ -1727,7 +1727,7 @@ x <- glm.nb(conscount ~ as.factor(migrant_status) + offset(log(pyears)), data = 
 extract_glm_results_allages(x, 'glm_mig', matched_cohort_England_2015_2020_annual_conscounts_fu, migrant_status)
 round(ci.lin(x,Exp=T),3)
 
-save(glm_mig, file="filepath/matched_glm_mig_fu.Rdata")
+save(glm_mig, file="filepath")
 
 # Join glm + IR + univariable_mig 
 univariable_migrant_status <- full_join(IR_allpatients_overall_migstatus, glm_mig_table, by = c("age_subcohort" = "age_subcohort","migrant_status" = "names")) %>%
@@ -1792,7 +1792,7 @@ univariable_migrant_status$age_subcohort <- factor(univariable_migrant_status$ag
 ## Reorder results (can change depending on how we want to present it)
 univariable_migrant_status_fu <- arrange(univariable_migrant_status, migrant_status, age_subcohort)
 
-write_csv(univariable_migrant_status_fu, "results/01_Consultations/matched_cohort/matched_univariable_migrant_status_fu.csv")
+write_csv(univariable_migrant_status_fu, "filepath")
 
 ## Multivariable model by migrant_status with IMD adjustment  ----
 
@@ -1853,16 +1853,16 @@ round(ci.lin(x,Exp=T),3)
 multivariable_matched_migrant_status_fu <- bind_rows(multivariable_matched_allages_table, glm_multivariable_matched_0to15_table,glm_multivariable_matched_16to24_table,
                                                      glm_multivariable_matched_25to34_table,glm_multivariable_matched_35to49_table,glm_multivariable_matched_50to64_table,glm_multivariable_matched_65plus_table)
 
-write_csv(multivariable_matched_migrant_status_fu, "filepath/matched_multivariable_migrant_status_fu.csv")
+write_csv(multivariable_matched_migrant_status_fu, "filepath")
 
 # Save .Rdata for forestplots
-save(multivariable_matched_allages, file="filepath/multivariable_matched_allages_fu.Rdata")
-save(glm_multivariable_matched_0to15, file="filepath/glm_multivariable_matched_0to15_fu.Rdata")
-save(glm_multivariable_matched_16to24, file="filepath/glm_multivariable_matched_16to24_fu.Rdata")
-save(glm_multivariable_matched_25to34, file="filepath/glm_multivariable_matched_25to34_fu.Rdata")
-save(glm_multivariable_matched_35to49, file="filepath/glm_multivariable_matched_35to49_fu.Rdata")
-save(glm_multivariable_matched_50to64, file="filepath/glm_multivariable_matched_50to64_fu.Rdata")
-save(glm_multivariable_matched_65plus, file="filepath/glm_multivariable_matched_65plus_fu.Rdata")
+save(multivariable_matched_allages, file="filepath")
+save(glm_multivariable_matched_0to15, file="filepath")
+save(glm_multivariable_matched_16to24, file="filepath")
+save(glm_multivariable_matched_25to34, file="filepath")
+save(glm_multivariable_matched_35to49, file="filepath")
+save(glm_multivariable_matched_50to64, file="filepath")
+save(glm_multivariable_matched_65plus, file="filepath")
 
 
 ## Analyses not included in paper ------
@@ -1918,21 +1918,21 @@ extract_glm_results_agesubcohorts(x, "glm_multivariable_matched_65plus", ">=65 y
 multivariable_matched_migrant_status_noIMD_fu <- bind_rows(multivariable_matched_allages_table, glm_multivariable_matched_0to15_table,glm_multivariable_matched_16to24_table,
                                                            glm_multivariable_matched_25to34_table,glm_multivariable_matched_35to49_table,glm_multivariable_matched_50to64_table,glm_multivariable_matched_65plus_table)
 
-write_csv(multivariable_matched_migrant_status_noIMD_fu, "results/01_Consultations/matched_cohort/matched_multivariable_migrant_status_noIMD_fu.csv")
+write_csv(multivariable_matched_migrant_status_noIMD_fu, "filepath")
 
 # Save .Rdata for forestplots
-save(multivariable_matched_allages, file="filepath/matched_multivariable_allages_fu.Rdata")
-save(glm_multivariable_matched_0to15, file="filepath/matched_glm_multivariable_0to15_fu.Rdata")
-save(glm_multivariable_matched_16to24, file="filepath/matched_glm_multivariable_16to24_fu.Rdata")
-save(glm_multivariable_matched_25to34, file="filepath/matched_glm_multivariable_25to34_fu.Rdata")
-save(glm_multivariable_matched_35to49, file="filepath/matched_glm_multivariable_35to49_fu.Rdata")
-save(glm_multivariable_matched_50to64, file="filepath/matched_glm_multivariable_50to64_fu.Rdata")
-save(glm_multivariable_matched_65plus, file="filepath/matched_glm_multivariable_65plus_fu.Rdata")
+save(multivariable_matched_allages, file="filepath")
+save(glm_multivariable_matched_0to15, file="filepath")
+save(glm_multivariable_matched_16to24, file="filepath")
+save(glm_multivariable_matched_25to34, file="filepath")
+save(glm_multivariable_matched_35to49, file="filepath")
+save(glm_multivariable_matched_50to64, file="filepath")
+save(glm_multivariable_matched_65plus, file="filepath")
 
 ### Certainty of migration status  ----
 
 # Reload to include 2020
-load(file = "filepath/matched_cohort_England_2015_2020_annual_conscounts_fu.Rdata")
+load(file = "filepath")
 
 matched_cohort_England_2015_2020_annual_conscounts_fu <- dplyr::select(matched_cohort_England_2015_2020_annual_conscounts_fu, 
                                                                             c(patid, pyears, conscount, migrant_status,
@@ -1978,7 +1978,7 @@ IR_migcertainty_studyyear <- full_join(IR_allpatients_overall_migcertainty_study
 IR_migcertainty_studyyear_fu <- arrange(IR_migcertainty_studyyear, migcertainty, age_subcohort) %>%
   relocate(age_subcohort)
 
-write_csv(IR_migcertainty_studyyear_fu, "results/01_Consultations/matched_cohort/matched_IR_migcertainty_studyyear_fu.csv")
+write_csv(IR_migcertainty_studyyear_fu, "filepath")
 
 # Filter out 2020 for modelling
 matched_cohort_England_2015_2020_annual_conscounts_fu <- matched_cohort_England_2015_2020_annual_conscounts_fu %>%
@@ -2001,7 +2001,7 @@ IR_allpatients_overall_migcertainty$age_subcohort <- 'All_ages'
 x <- glm.nb(conscount ~ as.factor(migcertainty) + offset(log(pyears)), data = matched_cohort_England_2015_2020_annual_conscounts_fu)
 extract_glm_results_allages(x, 'glm_migcertainty', matched_cohort_England_2015_2020_annual_conscounts_fu, migcertainty)
 
-save(glm_migcertainty, file="results/01_Consultations/matched_cohort/multivariable_matched_migrant_status_forestplot_inputs/matched_glm_migcertainty_fu.Rdata")
+save(glm_migcertainty, file="filepath")
 
 # Join glm + IR + univariable_mig 
 univariable_migcertainty <- full_join(IR_allpatients_overall_migcertainty, glm_migcertainty_table, by = c("age_subcohort" = "age_subcohort","migcertainty" = "names")) %>%
@@ -2061,7 +2061,7 @@ univariable_migcertainty$age_subcohort <- factor(univariable_migcertainty$age_su
 univariable_migcertainty_fu <- arrange(univariable_migcertainty, age_subcohort)
 
 
-write_csv(univariable_migcertainty_fu, "results/01_Consultations/matched_cohort/matched_univariable_migcertainty_fu.csv")
+write_csv(univariable_migcertainty_fu, "filepath")
 
 ## Multivariable model controlling for year + gender + as.factor(studyyear_agecat) + as.factor(imd) + prac_region
 
@@ -2116,16 +2116,16 @@ multivariable_migcertainty_fu <- bind_rows(multivariable_migcertainty_allages_ta
                                            glm_multivariable_migcertainty_25to34_table,glm_multivariable_migcertainty_35to49_table,glm_multivariable_migcertainty_50to64_table,glm_multivariable_migcertainty_65plus_table)
 
 
-write_csv(multivariable_migcertainty_fu, "results/01_Consultations/matched_cohort/matched_multivariable_migcertainty_fu.csv")
+write_csv(multivariable_migcertainty_fu, "filepath")
 
 # Save .Rdata for forestplots
-save(multivariable_migcertainty_allages, file="filepath/matched_multivariable_migcertainty_allages_fu.Rdata")
-save(glm_multivariable_migcertainty_0to15, file="filepath/matched_glm_multivariable_migcertainty_0to15_fu.Rdata")
-save(glm_multivariable_migcertainty_16to24, file="filepath/matched_glm_multivariable_migcertainty_16to24_fu.Rdata")
-save(glm_multivariable_migcertainty_25to34, file="filepath/matched_glm_multivariable_migcertainty_25to34_fu.Rdata")
-save(glm_multivariable_migcertainty_35to49, file="filepath/matched_glm_multivariable_migcertainty_35to49_fu.Rdata")
-save(glm_multivariable_migcertainty_50to64, file="filepath/matched_glm_multivariable_migcertainty_50to64_fu.Rdata")
-save(glm_multivariable_migcertainty_65plus, file="filepath/matched_glm_multivariable_migcertainty_65plus_fu.Rdata")
+save(multivariable_migcertainty_allages, file="filepath")
+save(glm_multivariable_migcertainty_0to15, file="filepath")
+save(glm_multivariable_migcertainty_16to24, file="filepath")
+save(glm_multivariable_migcertainty_25to34, file="filepath")
+save(glm_multivariable_migcertainty_35to49, file="filepath")
+save(glm_multivariable_migcertainty_50to64, file="filepath")
+save(glm_multivariable_migcertainty_65plus, file="filepath")
 
 
 ### Ethnicity (ethnicat6) - interaction term, additive and multiplicative effects ----
@@ -2139,8 +2139,8 @@ x <- glm.nb(conscount ~ as.factor(migrant_status)*as.factor(ethnicat6) + as.fact
 extract_glm_results_allages(x, 'multivariable_ethnicat6interaction_allages', matched_cohort_England_2015_2020_annual_conscounts_fu, migrant_status)
 
 # Save .Rdata for forestplots
-save(multivariable_ethnicat6interaction_allages, file="filepath/matched_multivariable_ethnicat6interaction_allages_fu.Rdata")
-write_csv(multivariable_ethnicat6interaction_allages, "filepath/matched_multivariable_ethnicat6interaction_allages_fu.csv")
+save(multivariable_ethnicat6interaction_allages, file="filepath")
+write_csv(multivariable_ethnicat6interaction_allages, "filepath")
 
 # RR (95% CI) for non-migrants in each ethnicity compared to White British non-migrants
 # For table
@@ -2167,49 +2167,49 @@ get_RR_and_95_CI <- function(dataframe) {
 ## White British migrants 
 white_migrant_vsWBNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1), conf=.95))
 get_RR_and_95_CI(white_migrant_vsWBNM)
-save(white_migrant_vsWBNM, file="filepath/matched_white_migrant_vsWBNM_fu.Rdata")
+save(white_migrant_vsWBNM, file="filepath")
 white_migrant <- white_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 # White non-British migrants 
 white_nonbritish_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)White non-British' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)White non-British' = 1), conf=.95))
 get_RR_and_95_CI(white_nonbritish_migrant_vsWBNM)
-save(white_nonbritish_migrant_vsWBNM, file="filepath/matched_white_nonbritish_migrant_vsWBNM_fu.Rdata")
+save(white_nonbritish_migrant_vsWBNM, file="filepath")
 white_nonbritish_migrant <- white_nonbritish_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Black migrants 
 black_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Black/African/Caribbean/Black British' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Black/African/Caribbean/Black British' = 1), conf=.95))
 get_RR_and_95_CI(black_migrant_vsWBNM)
-save(black_migrant_vsWBNM, file="filepath/matched_black_migrant_vsWBNM_fu.Rdata")
+save(black_migrant_vsWBNM, file="filepath")
 black_migrant <- black_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Asian
 asian_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Asian/Asian British' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Asian/Asian British' = 1), conf=.95))
 get_RR_and_95_CI(asian_migrant_vsWBNM)
-save(asian_migrant_vsWBNM, file="filepath/matched_asian_migrant_vsWBNM_fu.Rdata")
+save(asian_migrant_vsWBNM, file="filepath")
 asian_migrant <- asian_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Mixed
 mixed_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Mixed/Multiple ethnic groups' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Mixed/Multiple ethnic groups' = 1), conf=.95))
 get_RR_and_95_CI(mixed_migrant_vsWBNM)
-save(mixed_migrant_vsWBNM, file="filepath/matched_mixed_migrant_vsWBNM_fu.Rdata")
+save(mixed_migrant_vsWBNM, file="filepath")
 mixed_migrant <- mixed_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Other
 other_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Other ethnic group' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Other ethnic group' = 1), conf=.95))
 get_RR_and_95_CI(other_migrant_vsWBNM)
-save(other_migrant_vsWBNM, file="filepath/matched_other_migrant_vsWBNM_fu.Rdata")
+save(other_migrant_vsWBNM, file="filepath")
 other_migrant <- other_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Unknown
 unknown_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Unknown' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Unknown' = 1), conf=.95))
 get_RR_and_95_CI(unknown_migrant_vsWBNM)
-save(unknown_migrant_vsWBNM, file="filepath/matched_unknown_migrant_vsWBNM_fu.Rdata")
+save(unknown_migrant_vsWBNM, file="filepath")
 unknown_migrant <- unknown_migrant_vsWBNM %>%
   dplyr::select(RR)
 
@@ -2217,49 +2217,49 @@ unknown_migrant <- unknown_migrant_vsWBNM %>%
 ## White
 white_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1), conf=.95))
 get_RR_and_95_CI(white_strata_vsNM)
-save(white_strata_vsNM, file="filepath/matched_white_strata_vsNM_fu.Rdata")
+save(white_strata_vsNM, file="filepath")
 white_strata <- white_strata_vsNM %>%
   dplyr::select(RR)
 
 ## White non-British
 white_nonbritish_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)White non-British' = 1), conf=.95))
 get_RR_and_95_CI(white_nonbritish_strata_vsNM)
-save(white_nonbritish_strata_vsNM, file="filepath/matched_white_nonbritish_strata_vsNM_fu.Rdata")
+save(white_nonbritish_strata_vsNM, file="filepath")
 white_nonbritish_strata <- white_nonbritish_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Black
 black_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Black/African/Caribbean/Black British' = 1), conf=.95))
 get_RR_and_95_CI(black_strata_vsNM)
-save(black_strata_vsNM, file="filepath/matched_black_strata_vsNM_fu.Rdata")
+save(black_strata_vsNM, file="filepath")
 black_strata <- black_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Asian
 asian_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Asian/Asian British' = 1), conf=.95))
 get_RR_and_95_CI(asian_strata_vsNM)
-save(asian_strata_vsNM, file="filepath/matched_asian_strata_vsNM_fu.Rdata")
+save(asian_strata_vsNM, file="filepath")
 asian_strata <- asian_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Mixed
 mixed_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Mixed/Multiple ethnic groups' = 1), conf=.95))
 get_RR_and_95_CI(mixed_strata_vsNM)
-save(mixed_strata_vsNM, file="filepath/matched_mixed_strata_vsNM_fu.Rdata")
+save(mixed_strata_vsNM, file="filepath")
 mixed_strata <- mixed_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Other
 other_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Other ethnic group' = 1), conf=.95))
 get_RR_and_95_CI(other_strata_vsNM)
-save(other_strata_vsNM, file="filepath/matched_other_strata_vsNM_fu.Rdata")
+save(other_strata_vsNM, file="filepath")
 other_strata <- other_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Unknown
 unknown_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Unknown' = 1), conf=.95))
 get_RR_and_95_CI(unknown_strata_vsNM)
-save(unknown_strata_vsNM, file="filepath/matched_unknown_strata_vsNM_fu.Rdata")
+save(unknown_strata_vsNM, file="filepath")
 unknown_strata <- unknown_strata_vsNM %>%
   dplyr::select(RR)
 
@@ -2280,7 +2280,7 @@ matched_ethnicity_table <- matched_ethnicity_table %>%
   dplyr::select(Ethnicity, RR_nonmigrantsVsWBNM, RR_migrantsVsWBNM, RR_MvsNM_each_ethnicity)
 
 # Save dataframe for knitting in RMD file
-save(matched_ethnicity_table, file="filepath/matched_ethnicity_interactions_table_fu.Rdata")
+save(matched_ethnicity_table, file="filepath")
 
 ### Additive and multiplicative interaction effects for each ethnicity 
 # Based on Mathur MB & VanderWeele TJ (2018). R function for additive interaction measures. Epidemiology 29(1), e5-e6
@@ -2554,7 +2554,7 @@ int_effects_all_ethnicities_fu <- bind_rows(interaction_effects_white_non_britis
                                             interaction_effects_asian, interaction_effects_mixed, 
                                             interaction_effects_other, interaction_effects_unknown)
 
-write_csv(int_effects_all_ethnicities_fu, "filepath/matched_int_effects_all_ethnicities_fu.csv")
+write_csv(int_effects_all_ethnicities_fu, "filepath")
 
 ### London only  ----
 
@@ -2569,7 +2569,7 @@ exact_match_London_annual_conscounts <- matched_cohort_England_2015_2020_annual_
 x <- glm.nb(conscount ~ as.factor(migrant_status) + offset(log(pyears)), data = exact_match_London_annual_conscounts)
 extract_glm_results_allages(x, 'London_glm_mig', exact_match_London_annual_conscounts, migrant_status)
 
-write_csv(London_glm_mig_table, "results/01_Consultations/matched_cohort/matched_London_univariable_migrant_status_fu.csv")
+write_csv(London_glm_mig_table, "filepath")
 
 
 # IRR (multivariable glm)
@@ -2623,7 +2623,7 @@ London_multivariable_migrant_status_fu <- bind_rows(London_multivariable_allages
                                                     London_glm_multivariable_25to34_table,London_glm_multivariable_35to49_table,London_glm_multivariable_50to64_table,London_glm_multivariable_65plus_table)
 
 
-write_csv(London_multivariable_migrant_status_fu, "results/01_Consultations/matched_cohort/matched_London_multivariable_migrant_status_fu.csv")
+write_csv(London_multivariable_migrant_status_fu, "filepath")
 
 ### Study year  ----
 
@@ -2683,7 +2683,7 @@ extract_glm_results_agesubcohorts(x, "glm_2015_multivariable_65plus", ">=65 year
 multivariable_2015_migrant_status_fu <- bind_rows(multivariable_2015_allages_table, glm_2015_multivariable_0to15_table,glm_2015_multivariable_16to24_table,
                                                   glm_2015_multivariable_25to34_table,glm_2015_multivariable_35to49_table,glm_2015_multivariable_50to64_table,glm_2015_multivariable_65plus_table)
 
-write_csv(multivariable_2015_migrant_status_fu, "results/01_Consultations/matched_cohort/matched multivariable_2015_migrant_status_fu.csv")
+write_csv(multivariable_2015_migrant_status_fu, "filepath")
 
 ## 2016
 
@@ -2740,7 +2740,7 @@ multivariable_2016_migrant_status_fu <- bind_rows(multivariable_2016_allages_tab
                                                   glm_2016_multivariable_25to34_table,glm_2016_multivariable_35to49_table,glm_2016_multivariable_50to64_table,glm_2016_multivariable_65plus_table)
 
 
-write_csv(multivariable_2016_migrant_status_fu, "results/01_Consultations/matched_cohort/matched multivariable_2016_migrant_status_fu.csv")
+write_csv(multivariable_2016_migrant_status_fu, "filepath")
 
 ## 2017
 
@@ -2797,7 +2797,7 @@ multivariable_2017_migrant_status_fu <- bind_rows(multivariable_2017_allages_tab
                                                   glm_2017_multivariable_25to34_table,glm_2017_multivariable_35to49_table,glm_2017_multivariable_50to64_table,glm_2017_multivariable_65plus_table)
 
 
-write_csv(multivariable_2017_migrant_status_fu, "results/01_Consultations/matched_cohort/matched multivariable_2017_migrant_status_fu.csv")
+write_csv(multivariable_2017_migrant_status_fu, "filepath")
 
 ## 2018
 
@@ -2854,7 +2854,7 @@ multivariable_2018_migrant_status_fu <- bind_rows(multivariable_2018_allages_tab
                                                   glm_2018_multivariable_25to34_table,glm_2018_multivariable_35to49_table,glm_2018_multivariable_50to64_table,glm_2018_multivariable_65plus_table)
 
 
-write_csv(multivariable_2018_migrant_status_fu, "results/01_Consultations/matched_cohort/matched multivariable_2018_migrant_status_fu.csv")
+write_csv(multivariable_2018_migrant_status_fu, "filepath")
 
 ## 2019
 
@@ -2911,12 +2911,7 @@ multivariable_2019_migrant_status_fu <- bind_rows(multivariable_2019_allages_tab
                                                   glm_2019_multivariable_25to34_table,glm_2019_multivariable_35to49_table,glm_2019_multivariable_50to64_table,glm_2019_multivariable_65plus_table)
 
 
-write_csv(multivariable_2019_migrant_status_fu, "results/01_Consultations/matched_cohort/matched multivariable_2019_migrant_status_fu.csv")
-
-
-
-
-
+write_csv(multivariable_2019_migrant_status_fu, "filepath")
 
 # 6_Further analyses not included in paper -------
 ## Sensitivity analysis matched on age_cohort_entry, year_cohort_entry and prac_region
@@ -2924,7 +2919,7 @@ write_csv(multivariable_2019_migrant_status_fu, "results/01_Consultations/matche
 
 # Load dataset 
 
-load(file = "filepath/matched_cohort_England_2015_2020_annual_conscounts.Rdata")
+load(file = "filepath")
 
 # Matched on age_cohort_entry, year_cohort_entry and prac_region 
 
@@ -3009,7 +3004,7 @@ conscount_summary_overall_2 <- conscount_summary_overall_2 %>% relocate(age_subc
 matched_conscount_summary_fullperiod <- bind_rows(conscount_summary_overall_1,conscount_summary_overall_2)
 
 # save file
-write_csv(matched_conscount_summary_fullperiod, "filepath/matched_conscount_summary_fullperiod.csv" )
+write_csv(matched_conscount_summary_fullperiod, "filepath" )
 #view(conscount_summary_overall_final)
 
 ### Annual
@@ -3081,7 +3076,7 @@ conscount_summary_annual_2 <- conscount_summary_annual_2 %>% relocate(age_subcoh
 matched_conscount_summary_annual <- bind_rows(conscount_summary_annual_1,conscount_summary_annual_2)
 
 ## Export  summary measures
-write_csv(matched_conscount_summary_annual, "results/01_Consultations/matched_cohort/matched_conscount_summary_annual.csv" )
+write_csv(matched_conscount_summary_annual, "filepath" )
 
 ## 6_IRs by migrant_status + studyyear -----
 
@@ -3118,7 +3113,7 @@ IR_migstatus_studyyear <- arrange(IR_migstatus_studyyear, migrant_status, age_su
 # IR_migstatus_studyyear <- arrange(IR_migstatus_studyyear, studyyear) %>%
 #   relocate(age_subcohort)
 
-write_csv(IR_migstatus_studyyear, "results/01_Consultations/matched_cohort/matched_migstatus_studyyear.csv")
+write_csv(IR_migstatus_studyyear, "filepath")
 
 ## 7_IR & univariable IRR by migrant status ----------------------------------------------------------------------
 
@@ -3142,7 +3137,7 @@ x <- glm.nb(conscount ~ as.factor(migrant_status) + offset(log(pyears)), data = 
 extract_glm_results_allages(x, 'glm_mig', matched_cohort_England_2015_2020_annual_conscounts, migrant_status)
 
 
-save(glm_mig, file="filepath/matched_glm_mig.Rdata")
+save(glm_mig, file="filepath")
 
 # Join glm + IR + univariable_mig 
 univariable_migrant_status <- full_join(IR_allpatients_overall_migstatus, glm_mig_table, by = c("age_subcohort" = "age_subcohort","migrant_status" = "names")) %>%
@@ -3207,7 +3202,7 @@ univariable_migrant_status$age_subcohort <- factor(univariable_migrant_status$ag
 ## Reorder results (can change depending on how we want to present it)
 univariable_migrant_status <- arrange(univariable_migrant_status, migrant_status, age_subcohort)
 
-write_csv(univariable_migrant_status, "results/01_Consultations/matched_cohort/matched_univariable_migrant_status.csv")
+write_csv(univariable_migrant_status, "filepath")
 
 ## 8a_Multivariable model by migrant_status with IMD adjustment  ----
 
@@ -3261,16 +3256,16 @@ extract_glm_results_agesubcohorts(x, "glm_multivariable_matched_65plus", ">=65 y
 multivariable_matched_migrant_status <- bind_rows(multivariable_matched_allages_table, glm_multivariable_matched_0to15_table,glm_multivariable_matched_16to24_table,
                                                   glm_multivariable_matched_25to34_table,glm_multivariable_matched_35to49_table,glm_multivariable_matched_50to64_table,glm_multivariable_matched_65plus_table)
 
-write_csv(multivariable_matched_migrant_status, "results/01_Consultations/matched_cohort/matched_multivariable_migrant_status.csv")
+write_csv(multivariable_matched_migrant_status, "filepath")
 
 # Save .Rdata for forestplots
-save(multivariable_matched_allages, file="filepath/multivariable_matched_allages.Rdata")
-save(glm_multivariable_matched_0to15, file="filepath/glm_multivariable_matched_0to15.Rdata")
-save(glm_multivariable_matched_16to24, file="filepath/glm_multivariable_matched_16to24.Rdata")
-save(glm_multivariable_matched_25to34, file="filepath/glm_multivariable_matched_25to34.Rdata")
-save(glm_multivariable_matched_35to49, file="filepath/glm_multivariable_matched_35to49.Rdata")
-save(glm_multivariable_matched_50to64, file="filepath/glm_multivariable_matched_50to64.Rdata")
-save(glm_multivariable_matched_65plus, file="filepath/glm_multivariable_matched_65plus.Rdata")
+save(multivariable_matched_allages, file="filepath")
+save(glm_multivariable_matched_0to15, file="filepath")
+save(glm_multivariable_matched_16to24, file="filepath")
+save(glm_multivariable_matched_25to34, file="filepath")
+save(glm_multivariable_matched_35to49, file="filepath")
+save(glm_multivariable_matched_50to64, file="filepath")
+save(glm_multivariable_matched_65plus, file="filepath")
 
 
 ## 8b_Multivariable model by migrant_status without IMD adjustment  ----
@@ -3327,23 +3322,23 @@ multivariable_matched_migrant_status <- bind_rows(multivariable_matched_allages_
 
 
 multivariable_matched_migrant_status_noIMD <- multivariable_matched_migrant_status
-write_csv(multivariable_matched_migrant_status_noIMD, "results/01_Consultations/matched_cohort/matched_multivariable_migrant_status_noIMD.csv")
+write_csv(multivariable_matched_migrant_status_noIMD, "filepath")
 
 # Save .Rdata for forestplots
-save(multivariable_matched_allages, file="filepath/matched_multivariable_allages.Rdata")
-save(glm_multivariable_matched_0to15, file="filepath/matched_glm_multivariable_0to15.Rdata")
-save(glm_multivariable_matched_16to24, file="filepath/matched_glm_multivariable_16to24.Rdata")
-save(glm_multivariable_matched_25to34, file="filepath/matched_glm_multivariable_25to34.Rdata")
-save(glm_multivariable_matched_35to49, file="filepath/matched_glm_multivariable_35to49.Rdata")
-save(glm_multivariable_matched_50to64, file="filepath/matched_glm_multivariable_50to64.Rdata")
-save(glm_multivariable_matched_65plus, file="filepath/matched_glm_multivariable_65plus.Rdata")
+save(multivariable_matched_allages, file="filepath")
+save(glm_multivariable_matched_0to15, file="filepath")
+save(glm_multivariable_matched_16to24, file="filepath")
+save(glm_multivariable_matched_25to34, file="filepath")
+save(glm_multivariable_matched_35to49, file="filepath")
+save(glm_multivariable_matched_50to64, file="filepath")
+save(glm_multivariable_matched_65plus, file="filepath")
 
 # SENSITIVITY ANALYSES ## ----
 
 ## 9_Certainty of migration status  ----
 
 # Reload to include 2020
-load(file = "filepath/matched_cohort_England_2015_2020_annual_conscounts.Rdata")
+load(file = "filepath")
 
 matched_cohort_England_2015_2020_annual_conscounts <- dplyr::select(matched_cohort_England_2015_2020_annual_conscounts, 
                                                                     c(patid, pyears, conscount, migrant_status,
@@ -3393,7 +3388,7 @@ IR_migcertainty_studyyear <- arrange(IR_migcertainty_studyyear, migcertainty, ag
 #   relocate(age_subcohort)
 
 
-write_csv(IR_migcertainty_studyyear, "results/01_Consultations/matched_cohort/matched_IR_migcertainty_studyyear.csv")
+write_csv(IR_migcertainty_studyyear, "filepath")
 
 # Filter out 2020 for modelling
 matched_cohort_England_2015_2020_annual_conscounts <- matched_cohort_England_2015_2020_annual_conscounts %>%
@@ -3416,7 +3411,7 @@ IR_allpatients_overall_migcertainty$age_subcohort <- 'All_ages'
 x <- glm.nb(conscount ~ as.factor(migcertainty) + offset(log(pyears)), data = matched_cohort_England_2015_2020_annual_conscounts)
 extract_glm_results_allages(x, 'glm_migcertainty', matched_cohort_England_2015_2020_annual_conscounts, migcertainty)
 
-save(glm_migcertainty, file="filepath/matched_glm_migcertainty.Rdata")
+save(glm_migcertainty, file="filepath")
 
 # Join glm + IR + univariable_mig 
 univariable_migcertainty <- full_join(IR_allpatients_overall_migcertainty, glm_migcertainty_table, by = c("age_subcohort" = "age_subcohort","migcertainty" = "names")) %>%
@@ -3476,7 +3471,7 @@ univariable_migcertainty$age_subcohort <- factor(univariable_migcertainty$age_su
 univariable_migcertainty <- arrange(univariable_migcertainty, age_subcohort)
 
 
-write_csv(univariable_migcertainty, "results/01_Consultations/matched_cohort/matched_univariable_migcertainty.csv")
+write_csv(univariable_migcertainty, "filepath")
 
 ## Multivariable model controlling for year + gender + as.factor(studyyear_agecat) + as.factor(imd) + prac_region
 
@@ -3531,16 +3526,16 @@ multivariable_migcertainty <- bind_rows(multivariable_migcertainty_allages_table
                                         glm_multivariable_migcertainty_25to34_table,glm_multivariable_migcertainty_35to49_table,glm_multivariable_migcertainty_50to64_table,glm_multivariable_migcertainty_65plus_table)
 
 
-write_csv(multivariable_migcertainty, "results/01_Consultations/matched_cohort/matched_multivariable_migcertainty.csv")
+write_csv(multivariable_migcertainty, "filepath")
 
 # Save .Rdata for forestplots
-save(multivariable_migcertainty_allages, file="filepath/matched_multivariable_migcertainty_allages.Rdata")
-save(glm_multivariable_migcertainty_0to15, file="filepath/matched_glm_multivariable_migcertainty_0to15.Rdata")
-save(glm_multivariable_migcertainty_16to24, file="filepath/matched_glm_multivariable_migcertainty_16to24.Rdata")
-save(glm_multivariable_migcertainty_25to34, file="filepath/matched_glm_multivariable_migcertainty_25to34.Rdata")
-save(glm_multivariable_migcertainty_35to49, file="filepath/matched_glm_multivariable_migcertainty_35to49.Rdata")
-save(glm_multivariable_migcertainty_50to64, file="filepath/matched_glm_multivariable_migcertainty_50to64.Rdata")
-save(glm_multivariable_migcertainty_65plus, file="filepath/matched_glm_multivariable_migcertainty_65plus.Rdata")
+save(multivariable_migcertainty_allages, file="filepath")
+save(glm_multivariable_migcertainty_0to15, file="filepath")
+save(glm_multivariable_migcertainty_16to24, file="filepath")
+save(glm_multivariable_migcertainty_25to34, file="filepath")
+save(glm_multivariable_migcertainty_35to49, file="filepath")
+save(glm_multivariable_migcertainty_50to64, file="filepath")
+save(glm_multivariable_migcertainty_65plus, file="filepath")
 
 
 ## 10_Ethnicity (ethnicat6) - interaction term, additive and multiplicative effects ----
@@ -3554,8 +3549,8 @@ x <- glm.nb(conscount ~ as.factor(migrant_status)*as.factor(ethnicat6) + as.fact
 extract_glm_results_allages(x, 'multivariable_ethnicat6interaction_allages', matched_cohort_England_2015_2020_annual_conscounts, migrant_status)
 
 # Save .Rdata for forestplots
-save(multivariable_ethnicat6interaction_allages, file="filepath/matched_multivariable_ethnicat6interaction_allages.Rdata")
-write_csv(multivariable_ethnicat6interaction_allages, "filepath/matched_multivariable_ethnicat6interaction_allages.csv")
+save(multivariable_ethnicat6interaction_allages, file="filepath")
+write_csv(multivariable_ethnicat6interaction_allages, "filepath")
 
 # RR (95% CI) for non-migrants in each ethnicity compared to White British non-migrants
 # For table
@@ -3582,49 +3577,49 @@ get_RR_and_95_CI <- function(dataframe) {
 ## White British migrants 
 white_migrant_vsWBNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1), conf=.95))
 get_RR_and_95_CI(white_migrant_vsWBNM)
-save(white_migrant_vsWBNM, file="filepath/matched_white_migrant_vsWBNM.Rdata")
+save(white_migrant_vsWBNM, file="filepath")
 white_migrant <- white_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 # White non-British migrants 
 white_nonbritish_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)White non-British' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)White non-British' = 1), conf=.95))
 get_RR_and_95_CI(white_nonbritish_migrant_vsWBNM)
-save(white_nonbritish_migrant_vsWBNM, file="filepath/matched_white_nonbritish_migrant_vsWBNM.Rdata")
+save(white_nonbritish_migrant_vsWBNM, file="filepath")
 white_nonbritish_migrant <- white_nonbritish_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Black migrants 
 black_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Black/African/Caribbean/Black British' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Black/African/Caribbean/Black British' = 1), conf=.95))
 get_RR_and_95_CI(black_migrant_vsWBNM)
-save(black_migrant_vsWBNM, file="filepath/matched_black_migrant_vsWBNM.Rdata")
+save(black_migrant_vsWBNM, file="filepath")
 black_migrant <- black_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Asian
 asian_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Asian/Asian British' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Asian/Asian British' = 1), conf=.95))
 get_RR_and_95_CI(asian_migrant_vsWBNM)
-save(asian_migrant_vsWBNM, file="filepath/matched_asian_migrant_vsWBNM.Rdata")
+save(asian_migrant_vsWBNM, file="filepath")
 asian_migrant <- asian_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Mixed
 mixed_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Mixed/Multiple ethnic groups' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Mixed/Multiple ethnic groups' = 1), conf=.95))
 get_RR_and_95_CI(mixed_migrant_vsWBNM)
-save(mixed_migrant_vsWBNM, file="filepath/matched_mixed_migrant_vsWBNM.Rdata")
+save(mixed_migrant_vsWBNM, file="filepath")
 mixed_migrant <- mixed_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Other
 other_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Other ethnic group' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Other ethnic group' = 1), conf=.95))
 get_RR_and_95_CI(other_migrant_vsWBNM)
-save(other_migrant_vsWBNM, file="filepath/matched_other_migrant_vsWBNM.Rdata")
+save(other_migrant_vsWBNM, file="filepath")
 other_migrant <- other_migrant_vsWBNM %>%
   dplyr::select(RR)
 
 ## Unknown
 unknown_migrant_vsWBNM <- exp(estimable(x, c('as.factor(ethnicat6)Unknown' = 1, 'as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Unknown' = 1), conf=.95))
 get_RR_and_95_CI(unknown_migrant_vsWBNM)
-save(unknown_migrant_vsWBNM, file="filepath/matched_unknown_migrant_vsWBNM.Rdata")
+save(unknown_migrant_vsWBNM, file="filepath")
 unknown_migrant <- unknown_migrant_vsWBNM %>%
   dplyr::select(RR)
 
@@ -3632,49 +3627,49 @@ unknown_migrant <- unknown_migrant_vsWBNM %>%
 ## White
 white_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1), conf=.95))
 get_RR_and_95_CI(white_strata_vsNM)
-save(white_strata_vsNM, file="filepath/matched_white_strata_vsNM.Rdata")
+save(white_strata_vsNM, file="filepath")
 white_strata <- white_strata_vsNM %>%
   dplyr::select(RR)
 
 ## White non-British
 white_nonbritish_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)White non-British' = 1), conf=.95))
 get_RR_and_95_CI(white_nonbritish_strata_vsNM)
-save(white_nonbritish_strata_vsNM, file="filepath/matched_white_nonbritish_strata_vsNM.Rdata")
+save(white_nonbritish_strata_vsNM, file="filepath")
 white_nonbritish_strata <- white_nonbritish_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Black
 black_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Black/African/Caribbean/Black British' = 1), conf=.95))
 get_RR_and_95_CI(black_strata_vsNM)
-save(black_strata_vsNM, file="filepath/matched_black_strata_vsNM.Rdata")
+save(black_strata_vsNM, file="filepath")
 black_strata <- black_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Asian
 asian_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Asian/Asian British' = 1), conf=.95))
 get_RR_and_95_CI(asian_strata_vsNM)
-save(asian_strata_vsNM, file="filepath/matched_asian_strata_vsNM.Rdata")
+save(asian_strata_vsNM, file="filepath")
 asian_strata <- asian_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Mixed
 mixed_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Mixed/Multiple ethnic groups' = 1), conf=.95))
 get_RR_and_95_CI(mixed_strata_vsNM)
-save(mixed_strata_vsNM, file="filepath/matched_mixed_strata_vsNM.Rdata")
+save(mixed_strata_vsNM, file="filepath")
 mixed_strata <- mixed_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Other
 other_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Other ethnic group' = 1), conf=.95))
 get_RR_and_95_CI(other_strata_vsNM)
-save(other_strata_vsNM, file="filepath/matched_other_strata_vsNM.Rdata")
+save(other_strata_vsNM, file="filepath")
 other_strata <- other_strata_vsNM %>%
   dplyr::select(RR)
 
 ## Unknown
 unknown_strata_vsNM <- exp(estimable(x, c('as.factor(migrant_status)Migrant' = 1, 'as.factor(migrant_status)Migrant:as.factor(ethnicat6)Unknown' = 1), conf=.95))
 get_RR_and_95_CI(unknown_strata_vsNM)
-save(unknown_strata_vsNM, file="filepath/matched_unknown_strata_vsNM.Rdata")
+save(unknown_strata_vsNM, file="filepath")
 unknown_strata <- unknown_strata_vsNM %>%
   dplyr::select(RR)
 
@@ -3695,7 +3690,7 @@ matched_ethnicity_table <- matched_ethnicity_table %>%
   dplyr::select(Ethnicity, RR_nonmigrantsVsWBNM, RR_migrantsVsWBNM, RR_MvsNM_each_ethnicity)
 
 # Save dataframe for knitting in RMD file
-save(matched_ethnicity_table, file="filepath/matched_ethnicity_interactions_table.Rdata")
+save(matched_ethnicity_table, file="filepath")
 
 ### Additive and multiplicative interaction effects for each ethnicity 
 # Based on Mathur MB & VanderWeele TJ (2018). R function for additive interaction measures. Epidemiology 29(1), e5-e6
@@ -3969,7 +3964,7 @@ int_effects_all_ethnicities <- bind_rows(interaction_effects_white_non_british, 
                                          interaction_effects_asian, interaction_effects_mixed, 
                                          interaction_effects_other, interaction_effects_unknown)
 
-write_csv(int_effects_all_ethnicities, "filepath/matched_int_effects_all_ethnicities.csv")
+write_csv(int_effects_all_ethnicities, "filepath")
 
 ## 11_London only  ----
 
@@ -3984,7 +3979,7 @@ exact_match_London_annual_conscounts <- matched_cohort_England_2015_2020_annual_
 x <- glm.nb(conscount ~ as.factor(migrant_status) + offset(log(pyears)), data = exact_match_London_annual_conscounts)
 extract_glm_results_allages(x, 'London_glm_mig', exact_match_London_annual_conscounts, migrant_status)
 
-write_csv(London_glm_mig_table, "filepath/matched_London_univariable_migrant_status.csv")
+write_csv(London_glm_mig_table, "filepath")
 
 
 # IRR (multivariable glm)
@@ -4038,7 +4033,7 @@ London_multivariable_migrant_status <- bind_rows(London_multivariable_allages_ta
                                                  London_glm_multivariable_25to34_table,London_glm_multivariable_35to49_table,London_glm_multivariable_50to64_table,London_glm_multivariable_65plus_table)
 
 
-write_csv(London_multivariable_migrant_status, "filepath/matched_London_multivariable_migrant_status.csv")
+write_csv(London_multivariable_migrant_status, "filepath")
 
 ## 12_Study year  ----
 
@@ -4098,7 +4093,7 @@ extract_glm_results_agesubcohorts(x, "glm_2015_multivariable_65plus", ">=65 year
 multivariable_2015_migrant_status <- bind_rows(multivariable_2015_allages_table, glm_2015_multivariable_0to15_table,glm_2015_multivariable_16to24_table,
                                                glm_2015_multivariable_25to34_table,glm_2015_multivariable_35to49_table,glm_2015_multivariable_50to64_table,glm_2015_multivariable_65plus_table)
 
-write_csv(multivariable_2015_migrant_status, "filepath/matched multivariable_2015_migrant_status.csv")
+write_csv(multivariable_2015_migrant_status, "filepath")
 
 ## 2016
 
@@ -4155,7 +4150,7 @@ multivariable_2016_migrant_status <- bind_rows(multivariable_2016_allages_table,
                                                glm_2016_multivariable_25to34_table,glm_2016_multivariable_35to49_table,glm_2016_multivariable_50to64_table,glm_2016_multivariable_65plus_table)
 
 
-write_csv(multivariable_2016_migrant_status, "filepath/matched multivariable_2016_migrant_status.csv")
+write_csv(multivariable_2016_migrant_status, "filepath")
 
 ## 2017
 
@@ -4212,7 +4207,7 @@ multivariable_2017_migrant_status <- bind_rows(multivariable_2017_allages_table,
                                                glm_2017_multivariable_25to34_table,glm_2017_multivariable_35to49_table,glm_2017_multivariable_50to64_table,glm_2017_multivariable_65plus_table)
 
 
-write_csv(multivariable_2017_migrant_status, "filepath/matched multivariable_2017_migrant_status.csv")
+write_csv(multivariable_2017_migrant_status, "filepath")
 
 ## 2018
 
@@ -4269,7 +4264,7 @@ multivariable_2018_migrant_status <- bind_rows(multivariable_2018_allages_table,
                                                glm_2018_multivariable_25to34_table,glm_2018_multivariable_35to49_table,glm_2018_multivariable_50to64_table,glm_2018_multivariable_65plus_table)
 
 
-write_csv(multivariable_2018_migrant_status, "filepath/matched multivariable_2018_migrant_status.csv")
+write_csv(multivariable_2018_migrant_status, "filepath")
 
 ## 2019
 
@@ -4326,4 +4321,4 @@ multivariable_2019_migrant_status <- bind_rows(multivariable_2019_allages_table,
                                                glm_2019_multivariable_25to34_table,glm_2019_multivariable_35to49_table,glm_2019_multivariable_50to64_table,glm_2019_multivariable_65plus_table)
 
 
-write_csv(multivariable_2019_migrant_status, "filepath/matched multivariable_2019_migrant_status.csv")
+write_csv(multivariable_2019_migrant_status, "filepath")
