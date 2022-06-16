@@ -25,8 +25,8 @@ setwd("filepath")
 
 # Load data ---- 
 
-load(file = "filepath/matched_cohort_England_2015_2020_fu.Rdata")
-load(file = "filepath/01_Cohort_Rdata/matched_cohort_England_2015_2020_annual_records_fu.Rdata")
+load(file = "filepath")
+load(file = "filepath")
 
 # Functions ----
 calc_age <- function(birthDate, refDate = Sys.Date()) {
