@@ -22,7 +22,7 @@ setwd("filepath")
 
 ## cons_2015  ------------------------------------------------------------
 
-cons_2015 <- read_csv("filepath/consultation_2015.csv") 
+cons_2015 <- read_csv("filepath") 
 
 # consultations 2015
 glimpse(cons_2015)
@@ -220,14 +220,14 @@ glimpse(cons_2015_clean)
 sum(is.na(cons_2015_clean))
 
 # Export as .Rdata
-save(cons_2015_clean, file = "filepath/cons_2015_clean.Rdata") 
+save(cons_2015_clean, file = "filepath") 
 
 rm(list=ls())
 gc()
 
 ## cons_2016  ------------------------------------------------------------
 
-cons_2016 <- read_csv("filepath/consultation_2016.csv") 
+cons_2016 <- read_csv("filepath") 
 
 # consultations 2016
 glimpse(cons_2016)
@@ -393,7 +393,7 @@ outside_data_start_end_percent <- outside_data_start_end/total_events_2016 * 100
 # Save excluded events for later assessment of bias
 cons_2016_excluded <- cons_2016_clean %>%
   filter(eventdate < data_start | eventdate > data_end)
-save(cons_2016_excluded, file = "filepath/cons_2016_excluded.Rdata") 
+save(cons_2016_excluded, file = "filepath") 
 
 # Exclude events that are outside data_start and data_end
 cons_2016_clean <- cons_2016_clean %>%
@@ -429,7 +429,7 @@ glimpse(cons_2016_clean)
 sum(is.na(cons_2016_clean)) 
 
 # Export as .Rdata
-save(cons_2016_clean, file = "filepath/cons_2016_clean.Rdata") 
+save(cons_2016_clean, file = "filepath") 
 
 rm(list=ls())
 gc()
@@ -437,7 +437,7 @@ gc()
 
 ## cons_2017  ------------------------------------------------------------
 
-cons_2017 <- read_csv("filepath/consultation_2017.csv") 
+cons_2017 <- read_csv("filepath") 
 
 # consultations 2017
 glimpse(cons_2017)
@@ -603,7 +603,7 @@ outside_data_start_end_percent <- outside_data_start_end/total_events_2017 * 100
 # Save excluded events for later assessment of bias
 cons_2017_excluded <- cons_2017_clean %>%
   filter(eventdate < data_start | eventdate > data_end)
-save(cons_2017_excluded, file = "filepath/cons_2017_excluded.Rdata") 
+save(cons_2017_excluded, file = "filepath") 
 
 # Exclude events that are outside data_start and data_end
 cons_2017_clean <- cons_2017_clean %>%
@@ -639,7 +639,7 @@ glimpse(cons_2017_clean)
 sum(is.na(cons_2017_clean)) 
 
 # Export as .Rdata
-save(cons_2017_clean, file = "filepath/cons_2017_clean.Rdata") 
+save(cons_2017_clean, file = "filepath") 
 
 rm(list=ls())
 gc()
@@ -648,7 +648,7 @@ gc()
 
 ## cons_2018  ------------------------------------------------------------
 
-cons_2018 <- read_csv("filepath/consultation_2018.csv") 
+cons_2018 <- read_csv("filepath") 
 
 # consultations 2018
 glimpse(cons_2018)
@@ -786,7 +786,7 @@ cons_2018_clean <- cons_2018_clean %>%
 ## Total non-progressive n,% of direct consultation events with each exclusion characteristic
 
 # Exclude events belonging to patients not in the final included cohort
-load(file = "filepath/cohort_England_2015_2020_annual_records.Rdata")
+load(file = "filepath")
 cohort_England_2015_2020_annual_records <- cohort_England_2015_2020_annual_records %>%
   filter(studyyear == 2018)
 before_exclusion_events <- nrow(cons_2018_clean)
@@ -797,7 +797,7 @@ before_exclusion_events - total_events_2018
 rm(cohort_England_2015_2020_annual_records)
 
 # Select needed variables
-load(file = "filepath/cohort_England_2015_2020.Rdata")
+load(file = "filepath")
 data_start_end <- cohort_England_2015_2020 %>%
   select(c(patid, pracid, data_start, data_end))
 cons_2018_clean <- cons_2018_clean %>%
@@ -850,7 +850,7 @@ glimpse(cons_2018_clean)
 sum(is.na(cons_2018_clean)) 
 
 # Export as .Rdata
-save(cons_2018_clean, file = "filepath/cons_2018_clean.Rdata") 
+save(cons_2018_clean, file = "filepath") 
 
 rm(list=ls())
 gc()
@@ -859,7 +859,7 @@ gc()
 
 ## cons_2019  ------------------------------------------------------------
 
-cons_2019 <- read_csv("filepath/consultation_2019.csv") 
+cons_2019 <- read_csv("filepath") 
 
 # consultations 2019
 glimpse(cons_2019)
@@ -997,7 +997,7 @@ cons_2019_clean <- cons_2019_clean %>%
 ## Total non-progressive n,% of direct consultation events with each exclusion characteristic
 
 # Exclude events belonging to patients not in the final included cohort
-load(file = "filepath/cohort_England_2015_2020_annual_records.Rdata")
+load(file = "filepath")
 cohort_England_2015_2020_annual_records <- cohort_England_2015_2020_annual_records %>%
   filter(studyyear == 2019)
 before_exclusion_events <- nrow(cons_2019_clean)
@@ -1008,7 +1008,7 @@ before_exclusion_events - total_events_2019
 rm(cohort_England_2015_2020_annual_records)
 
 # Select needed variables
-load(file = "filepath/cohort_England_2015_2020.Rdata")
+load(file = "filepath")
 data_start_end <- cohort_England_2015_2020 %>%
   select(c(patid, pracid, data_start, data_end))
 cons_2019_clean <- cons_2019_clean %>%
@@ -1061,7 +1061,7 @@ glimpse(cons_2019_clean)
 sum(is.na(cons_2019_clean)) 
 
 # Export as .Rdata
-save(cons_2019_clean, file = "filepath/cons_2019_clean.Rdata") 
+save(cons_2019_clean, file = "filepath") 
 
 rm(list=ls())
 gc()
@@ -1070,7 +1070,7 @@ gc()
 
 ## cons_2020  ------------------------------------------------------------
 
-cons_2020 <- read_csv("filepath/consultation_2020.csv") 
+cons_2020 <- read_csv("filepath") 
 
 # consultations 2020
 glimpse(cons_2020)
@@ -1208,7 +1208,7 @@ cons_2020_clean <- cons_2020_clean %>%
 ## Total non-progressive n,% of direct consultation events with each exclusion characteristic
 
 # Exclude events belonging to patients not in the final included cohort
-load(file = "filepath/cohort_England_2015_2020_annual_records.Rdata")
+load(file = "filepath")
 cohort_England_2015_2020_annual_records <- cohort_England_2015_2020_annual_records %>%
   filter(studyyear == 2020)
 before_exclusion_events <- nrow(cons_2020_clean)
@@ -1219,7 +1219,7 @@ before_exclusion_events - total_events_2020
 rm(cohort_England_2015_2020_annual_records)
 
 # Select needed variables
-load(file = "filepath/01_Cohort_Rdata/cohort_England_2015_2020.Rdata")
+load(file = "filepath")
 data_start_end <- cohort_England_2015_2020 %>%
   select(c(patid, pracid, data_start, data_end))
 cons_2020_clean <- cons_2020_clean %>%
@@ -1234,7 +1234,7 @@ outside_data_start_end_percent <- outside_data_start_end/total_events_2020
 # Save excluded events for later assessment of bias
 cons_2020_excluded <- cons_2020_clean %>%
   filter(eventdate < data_start | eventdate > data_end)
-save(cons_2020_excluded, file = "filepath/cons_2020_excluded.Rdata") 
+save(cons_2020_excluded, file = "filepath") 
 
 # Exclude events that are outside data_start and data_end
 cons_2020_clean <- cons_2020_clean %>%
@@ -1270,7 +1270,7 @@ glimpse(cons_2020_clean)
 sum(is.na(cons_2020_clean)) 
 
 # Export as .Rdata
-save(cons_2020_clean, file = "filepath/cons_2020_clean.Rdata") 
+save(cons_2020_clean, file = "filepath") 
 
 rm(list=ls())
 gc()
@@ -1284,7 +1284,7 @@ gc()
 
 # cons_2015_clean ---
 
-load(file = "filepath/02_Cons_Rdata/cons_2015_clean.Rdata")
+load(file = "filepath")
 
 # One row per patient
 cons_2015_final <- cons_2015_clean %>%
@@ -1304,7 +1304,7 @@ n_distinct(cons_2015_final$patid)
 cons_2015_final <- droplevels(cons_2015_final)
 
 # Save data
-save(cons_2015_final, file = "filepath/cons_2015_final.Rdata")
+save(cons_2015_final, file = "filepath")
 
 # Remove uneeded data from environment
 rm(list = ls(all.names = TRUE))
@@ -1312,7 +1312,7 @@ gc()
 
 # cons_2016_clean ---
 
-load(file = "filepath/cons_2016_clean.Rdata")
+load(file = "filepath")
 
 # One row per patient
 cons_2016_final <- cons_2016_clean %>%
@@ -1332,7 +1332,7 @@ n_distinct(cons_2016_final$patid)
 cons_2016_final <- droplevels(cons_2016_final)
 
 # Save data
-save(cons_2016_final, file = "filepath/cons_2016_final.Rdata")
+save(cons_2016_final, file = "filepath")
 
 # Remove uneeded data from environment
 rm(list = ls(all.names = TRUE))
@@ -1340,7 +1340,7 @@ gc()
 
 # cons_2017_clean ---
 
-load(file = "filepath/cons_2017_clean.Rdata")
+load(file = "filepath")
 
 # One row per patient
 cons_2017_final <- cons_2017_clean %>%
@@ -1360,7 +1360,7 @@ n_distinct(cons_2017_final$patid)
 cons_2017_final <- droplevels(cons_2017_final)
 
 # Save data
-save(cons_2017_final, file = "filepath/cons_2017_final.Rdata")
+save(cons_2017_final, file = "filepath")
 
 # Remove uneeded data from environment
 rm(list = ls(all.names = TRUE))
@@ -1368,7 +1368,7 @@ gc()
 
 # cons_2018_clean ---
 
-load(file = "filepath/cons_2018_clean.Rdata")
+load(file = "filepath")
 
 # One row per patient
 cons_2018_final <- cons_2018_clean %>%
@@ -1388,7 +1388,7 @@ n_distinct(cons_2018_final$patid)
 cons_2018_final <- droplevels(cons_2018_final)
 
 # Save data
-save(cons_2018_final, file = "filepath/cons_2018_final.Rdata")
+save(cons_2018_final, file = "filepath")
 
 # Remove uneeded data from environment
 rm(list = ls(all.names = TRUE))
@@ -1396,7 +1396,7 @@ gc()
 
 # cons_2019_clean ---
 
-load(file = "filepath/cons_2019_clean.Rdata")
+load(file = "filepath")
 
 # One row per patient
 cons_2019_final <- cons_2019_clean %>%
@@ -1416,7 +1416,7 @@ n_distinct(cons_2019_final$patid)
 cons_2019_final <- droplevels(cons_2019_final)
 
 # Save data
-save(cons_2019_final, file = "filepath/cons_2019_final.Rdata")
+save(cons_2019_final, file = "filepath")
 
 # Remove uneeded data from environment
 rm(list = ls(all.names = TRUE))
@@ -1424,7 +1424,7 @@ gc()
 
 # cons_2020_clean ---
 
-load(file = "filepath/cons_2020_clean.Rdata")
+load(file = "filepath")
 
 # One row per patient
 cons_2020_final <- cons_2020_clean %>%
@@ -1444,7 +1444,7 @@ n_distinct(cons_2020_final$patid)
 cons_2020_final <- droplevels(cons_2020_final)
 
 # Save data
-save(cons_2020_final, file = "filepath/cons_2020_final.Rdata")
+save(cons_2020_final, file = "filepath")
 
 # Remove uneeded data from environment
 rm(list = ls(all.names = TRUE))
@@ -1453,12 +1453,12 @@ gc()
 # 5_Join all annual consultation event files -------------------------------------
 
 # Load files
-load(file = "filepath/cons_2015_final.Rdata")
-load(file = "filepath/cons_2016_final.Rdata")
-load(file = "filepath/cons_2017_final.Rdata")
-load(file = "filepath/cons_2018_final.Rdata")
-load(file = "filepath/cons_2019_final.Rdata")
-load(file = "filepath/cons_2020_final.Rdata")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
 
 # Join all annual files into full file
 cons_allyears <- rbind(cons_2015_final,cons_2016_final,cons_2017_final,cons_2018_final,cons_2019_final,cons_2020_final)
@@ -1474,7 +1474,7 @@ any(is.na(cons_allyears))
 n_distinct(cons_allyears$patid) 
 
 # Save data
-save(cons_allyears, file = "filepath/cons_allyears.Rdata")
+save(cons_allyears, file = "filepath")
 
 # Remove unneeded data from environment
 rm(cons_2015_final, cons_2016_final, cons_2017_final,cons_2018_final,cons_2019_final,
@@ -1483,12 +1483,12 @@ rm(cons_2015_final, cons_2016_final, cons_2017_final,cons_2018_final,cons_2019_f
 # 6_Join consultations onto annual records file ------
 
 # Load cohort file and join
-load(file = "filepath/cohort_England_2015_2020_annual_records.Rdata")
+load(file = "filepath")
 cohort_England_2015_2020_annual_conscounts <- cohort_England_2015_2020_annual_records %>%
   left_join(cons_allyears, by = c("patid" = "patid", "studyyear" = "studyyear"))
 
 # Check distinct number of patients matches the cohort file
-load(file = "filepath/cohort_England_2015_2020.Rdata")
+load(file = "filepath")
 n_distinct(cohort_England_2015_2020_annual_conscounts$patid) == n_distinct(cohort_England_2015_2020$patid) 
 
 # Replace NAs in cons count variables with 0
@@ -1500,19 +1500,19 @@ glimpse(cohort_England_2015_2020_annual_conscounts)
 sum(cohort_England_2015_2020_annual_conscounts$conscount)
 sum(cohort_England_2015_2020_annual_conscounts$conscount) == sum(cons_allyears$conscount) 
 
-save(cohort_England_2015_2020_annual_conscounts, file = "filepath/cohort_England_2015_2020_annual_conscounts.Rdata") 
+save(cohort_England_2015_2020_annual_conscounts, file = "filepath") 
 
 ######################## MATCHED ANNUAL CONSULATION COUNT DATASETS  ############################## ---------------------------------------------------------
 
 # 7_Sensitivity analysis 1: Create exact-matched annual cohort dataset (matched on age_data_start, year_data_start and prac_region) -----
 
-load(file = "filepath/cohort_England_2015_2020_annual_conscounts.Rdata")
-load(file = "filepath/matched_cohort_England_2015_2020_test_ds.Rdata")
+load(file = "filepath")
+load(file = "filepath")
 
 matched_cohort_England_2015_2020_annual_conscounts_test_ds <- cohort_England_2015_2020_annual_conscounts %>%
   semi_join(matched_cohort_England_2015_2020_test_ds, by = 'patid')
 
-load(file = "filepath/matched_cohort_England_2015_2020_annual_records_test_ds.Rdata")
+load(file = "filepath")
 
 # check number of rows
 nrow(matched_cohort_England_2015_2020_annual_records_test_ds) == nrow(matched_cohort_England_2015_2020_annual_conscounts_test_ds) 
@@ -1524,13 +1524,13 @@ save(matched_cohort_England_2015_2020_annual_conscounts_test_ds, file = "filepat
 
 # 8_Sensitivity analysis 2: Create exact-matched annual cohort dataset (matched on follow-up and prac_region) -----
 
-load(file = "filepath/cohort_England_2015_2020_annual_conscounts.Rdata")
-load(file = "filepath/matched_cohort_England_2015_2020_fu.Rdata")
+load(file = "filepath")
+load(file = "filepath")
 
 matched_cohort_England_2015_2020_annual_conscounts_fu <- cohort_England_2015_2020_annual_conscounts %>%
   semi_join(matched_cohort_England_2015_2020_fu, by = 'patid')
 
-load(file = "filepath/matched_cohort_England_2015_2020_annual_records_fu.Rdata")
+load(file = "filepath")
 
 # check number of rows
 nrow(matched_cohort_England_2015_2020_annual_records_fu) == nrow(matched_cohort_England_2015_2020_annual_conscounts_fu) 
@@ -1539,18 +1539,18 @@ nrow(matched_cohort_England_2015_2020_annual_records_fu) == nrow(matched_cohort_
 sum(matched_cohort_England_2015_2020_annual_conscounts_fu$conscount)
 n_distinct(matched_cohort_England_2015_2020_annual_conscounts_fu$patid) ==n_distinct(matched_cohort_England_2015_2020_fu$patid) 
 
-save(matched_cohort_England_2015_2020_annual_conscounts_fu, file = "filepath/matched_cohort_England_2015_2020_annual_conscounts_fu.Rdata") 
+save(matched_cohort_England_2015_2020_annual_conscounts_fu, file = "filepath") 
 
 # 9_Not used in paper ----
 ## 9a_Create exact-matched annual cohort dataset (matched on age at cohort entry, year at cohort entry and prac_region) -----
 
-load(file = "filepath/cohort_England_2015_2020_annual_conscounts.Rdata")
-load(file = "filepath/matched_cohort_England_2015_2020.Rdata")
+load(file = "filepath")
+load(file = "filepath")
 
 matched_cohort_England_2015_2020_annual_conscounts <- cohort_England_2015_2020_annual_conscounts %>%
   semi_join(matched_cohort_England_2015_2020, by = 'patid')
 
-load(file = "filepath/matched_cohort_England_2015_2020_annual_records.Rdata")
+load(file = "filepath")
 
 # check number of rows
 nrow(matched_cohort_England_2015_2020_annual_records) == nrow(matched_cohort_England_2015_2020_annual_conscounts) # T
@@ -1628,7 +1628,7 @@ glimpse(matched_cohort_England_2015_2020_annual_conscounts)
 sum(matched_cohort_England_2015_2020_annual_conscounts$conscount)
 n_distinct(matched_cohort_England_2015_2020_annual_conscounts$patid) ==n_distinct(matched_cohort_England_2015_2020$patid) # T
 
-save(matched_cohort_England_2015_2020_annual_conscounts, file = "filepath/matched_cohort_England_2015_2020_annual_conscounts.Rdata") 
+save(matched_cohort_England_2015_2020_annual_conscounts, file = "filepath") 
 
 
 
