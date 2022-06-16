@@ -20,47 +20,47 @@ setwd("filepath")
 
 # England 
 
-load(file = "filepath/glm_mig.Rdata") 
+load(file = "filepath") 
 full_cons_glm_unadj <- glm_mig %>% filter(names=="Migrant")
 full_cons_glm_unadj$names <- recode(full_cons_glm_unadj$names,
                                     "Migrant" = "Unadjusted")
 
-load(file = "filepath/multivariable_allages.Rdata") 
+load(file = "filepath") 
 full_cons_glm_adj_noIMD <- multivariable_allages %>% filter(names=="Migrant") 
 full_cons_glm_adj_noIMD$names <- recode(full_cons_glm_adj_noIMD$names,
                                         "Migrant" = "Adjusted, without IMD")
 
-load(file = "filepath/multivariable_allages.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD <- multivariable_allages %>% filter(names=="Migrant") 
 full_cons_glm_adj_withIMD$names <- recode(full_cons_glm_adj_withIMD$names,
                                           "Migrant" = "Adjusted, with IMD")
 
-load(file = "filepath/glm_multivariable_0to15.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_0to15 <- glm_multivariable_0to15 %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_0to15$names <- recode(full_cons_glm_adj_withIMD_0to15$names,
                                                 "Migrant" = "    0-15 years")
 
-load(file = "filepath/glm_multivariable_16to24.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_16to24 <- glm_multivariable_16to24 %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_16to24$names <- recode(full_cons_glm_adj_withIMD_16to24$names,
                                                  "Migrant" = "    16-24 years")
 
-load(file = "filepath/glm_multivariable_25to34.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_25to34 <- glm_multivariable_25to34 %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_25to34$names <- recode(full_cons_glm_adj_withIMD_25to34$names,
                                                  "Migrant" = "    25-34 years")
 
-load(file = "filepath/glm_multivariable_35to49.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_35to49 <- glm_multivariable_35to49 %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_35to49$names <- recode(full_cons_glm_adj_withIMD_35to49$names,
                                                  "Migrant" = "    35-49 years")
 
-load(file = "filepath/glm_multivariable_50to64.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_50to64 <- glm_multivariable_50to64 %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_50to64$names <- recode(full_cons_glm_adj_withIMD_50to64$names,
                                                  "Migrant" = "    50-64 years")
 
-load(file = "filepath/glm_multivariable_65plus.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_65plus <- glm_multivariable_65plus %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_65plus$names <- recode(full_cons_glm_adj_withIMD_65plus$names, 
                                                  "Migrant" = "    65 years and older")
@@ -76,47 +76,47 @@ England_cohort_plot_data <- bind_rows(full_cons_glm_unadj, full_cons_glm_adj_noI
 
 ## London only  -------
 
-load(file = "filepath/London_glm_mig.Rdata")
+load(file = "filepath")
 london_cons_glm_unadj <- London_glm_mig %>% filter(names=="Migrant") 
 london_cons_glm_unadj$names <- recode(london_cons_glm_unadj$names,
                                       "Migrant" = "Unadjusted")
 
-load(file = "filepath/London_multivariable_allages_noIMD.Rdata")
+load(file = "filepath")
 london_cons_glm_adj_withoutIMD <- London_multivariable_allages_noIMD %>% filter(names=="Migrant") 
 london_cons_glm_adj_withoutIMD$names <- recode(london_cons_glm_adj_withoutIMD$names,
                                                "Migrant" = "Adjusted, without IMD")
 
-load(file = "filepath/London_multivariable_allages.Rdata")
+load(file = "filepath")
 london_cons_glm_adj_withIMD <- London_multivariable_allages %>% filter(names=="Migrant") 
 london_cons_glm_adj_withIMD$names <- recode(london_cons_glm_adj_withIMD$names,
                                             "Migrant" = "Adjusted, with IMD")
 
-load(file = "filepath/London_glm_multivariable_0to15.Rdata")
+load(file = "filepath")
 london_cons_glm_adj_withIMD_0to15 <- London_glm_multivariable_0to15 %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 london_cons_glm_adj_withIMD_0to15$names <- recode(london_cons_glm_adj_withIMD_0to15$names,
                                                   "Migrant" = "    0-15 years")
 
-load(file = "filepath/London_glm_multivariable_16to24.Rdata")
+load(file = "filepath")
 london_cons_glm_adj_withIMD_16to24 <- London_glm_multivariable_16to24 %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 london_cons_glm_adj_withIMD_16to24$names <- recode(london_cons_glm_adj_withIMD_16to24$names,
                                                    "Migrant" = "    16-24 years")
 
-load(file = "filepath/London_glm_multivariable_25to34.Rdata")
+load(file = "filepath")
 london_cons_glm_adj_withIMD_25to34 <- London_glm_multivariable_25to34 %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 london_cons_glm_adj_withIMD_25to34$names <- recode(london_cons_glm_adj_withIMD_25to34$names,
                                                    "Migrant" = "    25-34 years")
 
-load(file = "filepath/London_glm_multivariable_35to49.Rdata")
+load(file = "filepath")
 london_cons_glm_adj_withIMD_35to49 <- London_glm_multivariable_35to49 %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 london_cons_glm_adj_withIMD_35to49$names <- recode(london_cons_glm_adj_withIMD_35to49$names,
                                                    "Migrant" = "    35-49 years")
 
-load(file = "filepath/London_glm_multivariable_50to64.Rdata")
+load(file = "filepath")
 london_cons_glm_adj_withIMD_50to64 <- London_glm_multivariable_50to64 %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 london_cons_glm_adj_withIMD_50to64$names <- recode(london_cons_glm_adj_withIMD_50to64$names,
                                                    "Migrant" = "    50-64 years")
 
-load(file = "filepath/London_glm_multivariable_65plus.Rdata")
+load(file = "filepath")
 london_cons_glm_adj_withIMD_65plus <- London_glm_multivariable_65plus %>% filter(names=="Migrant") %>% dplyr::select(-c(age_subcohort))
 london_cons_glm_adj_withIMD_65plus$names <- recode(london_cons_glm_adj_withIMD_65plus$names, 
                                                    "Migrant" = "    65 years and older")
@@ -154,7 +154,7 @@ tabletext <- list(
   c("95% CI", sfrac(forest_plot_main_all$ciEngland, forest_plot_main_all$ciLondon, data = forest_plot_main_all)))
 
 dev.new()
-png(file = "filepath/forest_plots_main_analysis.png", width = 2500, height = 2000)
+png(file = "filepath", width = 2500, height = 2000)
 forest_plot_main <- forestplot(tabletext, 
                              mean = cbind(c(NA, forest_plot_main_all$estimateEngland), c(NA, forest_plot_main_all$estimateLondon)),
                              lower = cbind(c(NA, forest_plot_main_all$lowerEngland), c(NA, forest_plot_main_all$lowerLondon)),
@@ -190,16 +190,16 @@ dev.off()
 
 # 04_FOREST PLOT 2 - Ethnicity analysis ----
 ## Migrants vs White British non-migrants (adjusted, with IMD)------
-load(file = 'filepath/ethnicity_interactions_table.Rdata')
-load(file = "filepath/multivariable_ethnicat6interaction_allages.Rdata")
-load(file="filepath/multivariable_ethnicity_forestplot_inputs/white_migrant_vsWBNM.Rdata")
-load(file="filepath/multivariable_ethnicity_forestplot_inputs/white_nonbritish_migrant_vsWBNM.Rdata")
-load(file="filepath/multivariable_ethnicity_forestplot_inputs/black_migrant_vsWBNM.Rdata")
-load(file="filepath/multivariable_ethnicity_forestplot_inputs/asian_migrant_vsWBNM.Rdata")
-load(file="filepath/multivariable_ethnicity_forestplot_inputs/mixed_migrant_vsWBNM.Rdata")
-load(file="filepath/multivariable_ethnicity_forestplot_inputs/other_migrant_vsWBNM.Rdata")
-load(file="filepath/multivariable_ethnicity_forestplot_inputs/unknown_migrant_vsWBNM.Rdata")
-load(file="filepath/multivariable_ethnicity_forestplot_inputs/all_migrant_vsWBNM.Rdata")
+load(file = 'filepath')
+load(file = "filepath")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
 
 ethnicity_vsWBNM <- bind_rows(white_migrant_vsWBNM, white_nonbritish_migrant_vsWBNM, mixed_migrant_vsWBNM, 
                               asian_migrant_vsWBNM, black_migrant_vsWBNM, other_migrant_vsWBNM,unknown_migrant_vsWBNM, all_migrant_vsWBNM)
@@ -218,13 +218,13 @@ row.names(ethnicity_vsWBNM) <- NULL
 
 ## Migrants vs. non-migrants of the same ethnicity (adjusted, with IMD) ----
 
-load(file="filepath/white_strata_vsNM.Rdata")
-load(file="filepath/white_nonbritish_strata_vsNM.Rdata")
-load(file="filepath/black_strata_vsNM.Rdata")
-load(file="filepath/asian_strata_vsNM.Rdata")
-load(file="filepath/mixed_strata_vsNM.Rdata")
-load(file="filepath/other_strata_vsNM.Rdata")
-load(file="filepath/unknown_strata_vsNM.Rdata")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
+load(file="filepath")
 
 ethnicity_vsNM <- bind_rows(white_strata_vsNM, white_nonbritish_strata_vsNM, mixed_strata_vsNM, 
                             asian_strata_vsNM, black_strata_vsNM, other_strata_vsNM,unknown_strata_vsNM)
@@ -251,7 +251,7 @@ tabletext <- cbind(c("Migrants vs. White British non-migrants", ethnicity_plot_d
                    c("95% CI", ethnicity_plot_data$ci))
 
 dev.new()
-png(file = "filepath/forest_plots_main_analysis_ethnicity.png", width = 3000, height = 2600)
+png(file = "filepath", width = 3000, height = 2600)
 forest_plots_main_analysis_ethnicity <- forestplot(tabletext, 
                              mean = cbind(c(NA, ethnicity_plot_data$estimate)),
                              lower = cbind(c(NA, ethnicity_plot_data$lower)),
@@ -287,47 +287,47 @@ dev.off()
 
 ## SA 1: Matched on age_data_start, year_data_start and prac_region -------
 
-load(file = "filepath/matched_glm_mig_ds.Rdata") 
+load(file = "filepath") 
 full_cons_glm_unadj <- glm_mig %>% filter(names=="Migrant") %>% mutate(outcome = 'Migrants vs. non-migrants')
 full_cons_glm_unadj$names <- recode(full_cons_glm_unadj$names,
                                     "Migrant" = "Unadjusted")
 
-load(file = "filepath/matched_multivariable_allages_ds.Rdata") 
+load(file = "filepath") 
 full_cons_glm_adj_noIMD <- multivariable_matched_allages %>% filter(names=="Migrant") %>% mutate(outcome = ' ')
 full_cons_glm_adj_noIMD$names <- recode(full_cons_glm_adj_noIMD$names,
                                         "Migrant" = "Adjusted, without IMD")
 
-load(file = "filepath/multivariable_matched_allages_ds.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD <- multivariable_matched_allages %>% filter(names=="Migrant") %>% mutate(outcome = '')
 full_cons_glm_adj_withIMD$names <- recode(full_cons_glm_adj_withIMD$names,
                                           "Migrant" = "Adjusted, with IMD")
 
-load(file = "filepath/glm_multivariable_matched_0to15_ds.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_0to15 <- glm_multivariable_matched_0to15 %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_0to15$names <- recode(full_cons_glm_adj_withIMD_0to15$names,
                                                 "Migrant" = "    0-15 years")
 
-load(file = "filepath/glm_multivariable_matched_16to24_ds.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_16to24 <- glm_multivariable_matched_16to24 %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_16to24$names <- recode(full_cons_glm_adj_withIMD_16to24$names,
                                                  "Migrant" = "    16-24 years")
 
-load(file = "filepath/glm_multivariable_matched_25to34_ds.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_25to34 <- glm_multivariable_matched_25to34 %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_25to34$names <- recode(full_cons_glm_adj_withIMD_25to34$names,
                                                  "Migrant" = "    25-34 years")
 
-load(file = "filepath/glm_multivariable_matched_35to49_ds.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_35to49 <- glm_multivariable_matched_35to49 %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_35to49$names <- recode(full_cons_glm_adj_withIMD_35to49$names,
                                                  "Migrant" = "    35-49 years")
 
-load(file = "filepath/glm_multivariable_matched_50to64_ds.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_50to64 <- glm_multivariable_matched_50to64 %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_50to64$names <- recode(full_cons_glm_adj_withIMD_50to64$names,
                                                  "Migrant" = "    50-64 years")
 
-load(file = "filepath/glm_multivariable_matched_65plus_ds.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_65plus <- glm_multivariable_matched_65plus %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_65plus$names <- recode(full_cons_glm_adj_withIMD_65plus$names, 
                                                  "Migrant" = "    65 years and older")
@@ -343,47 +343,47 @@ exact_matched_plot_data_SA1 <- bind_rows(full_cons_glm_unadj, full_cons_glm_adj_
 
 ## SA 2: Matched on pyears and prac_region ----------------
 
-load(file = "filepath/matched_glm_mig_fu.Rdata") 
+load(file = "filepath") 
 full_cons_glm_unadj <- glm_mig %>% filter(names=="Migrant") %>% mutate(outcome = 'Migrants vs. non-migrants')
 full_cons_glm_unadj$names <- recode(full_cons_glm_unadj$names,
                                     "Migrant" = "Unadjusted")
 
-load(file = "filepath/matched_multivariable_allages_fu.Rdata") 
+load(file = "filepath") 
 full_cons_glm_adj_noIMD <- multivariable_matched_allages %>% filter(names=="Migrant") %>% mutate(outcome = ' ')
 full_cons_glm_adj_noIMD$names <- recode(full_cons_glm_adj_noIMD$names,
                                         "Migrant" = "Adjusted, without IMD")
 
-load(file = "filepath/multivariable_matched_allages_fu.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD <- multivariable_matched_allages %>% filter(names=="Migrant") %>% mutate(outcome = '')
 full_cons_glm_adj_withIMD$names <- recode(full_cons_glm_adj_withIMD$names,
                                           "Migrant" = "Adjusted, with IMD")
 
-load(file = "filepath/glm_multivariable_matched_0to15_fu.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_0to15 <- glm_multivariable_matched_0to15 %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_0to15$names <- recode(full_cons_glm_adj_withIMD_0to15$names,
                                                 "Migrant" = "    0-15 years")
 
-load(file = "filepath/glm_multivariable_matched_16to24_fu.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_16to24 <- glm_multivariable_matched_16to24 %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_16to24$names <- recode(full_cons_glm_adj_withIMD_16to24$names,
                                                  "Migrant" = "    16-24 years")
 
-load(file = "filepath/glm_multivariable_matched_25to34_fu.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_25to34 <- glm_multivariable_matched_25to34 %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_25to34$names <- recode(full_cons_glm_adj_withIMD_25to34$names,
                                                  "Migrant" = "    25-34 years")
 
-load(file = "filepath/glm_multivariable_matched_35to49_fu.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_35to49 <- glm_multivariable_matched_35to49 %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_35to49$names <- recode(full_cons_glm_adj_withIMD_35to49$names,
                                                  "Migrant" = "    35-49 years")
 
-load(file = "filepath/glm_multivariable_matched_50to64_fu.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_50to64 <- glm_multivariable_matched_50to64 %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_50to64$names <- recode(full_cons_glm_adj_withIMD_50to64$names,
                                                  "Migrant" = "    50-64 years")
 
-load(file = "filepath/glm_multivariable_matched_65plus_fu.Rdata")
+load(file = "filepath")
 full_cons_glm_adj_withIMD_65plus <- glm_multivariable_matched_65plus %>% filter(names=="Migrant") %>% mutate(outcome = '') %>% dplyr::select(-c(age_subcohort))
 full_cons_glm_adj_withIMD_65plus$names <- recode(full_cons_glm_adj_withIMD_65plus$names, 
                                                  "Migrant" = "    65 years and older")
@@ -422,7 +422,7 @@ tabletext <- list(
   c("95% CI", sfrac(forest_plot_sa_all$ciSA1, forest_plot_sa_all$ciSA2, data = forest_plot_sa_all)))
 
 dev.new()
-png(file = "filepath/forest_plots_sensitivity_analyses.png", width = 2500, height = 2000)
+png(file = "filepath", width = 2500, height = 2000)
 forest_plot_SA <- forestplot(tabletext, 
                              mean = cbind(c(NA, forest_plot_sa_all$estimateSA1), c(NA, forest_plot_sa_all$estimateSA2)),
                              lower = cbind(c(NA, forest_plot_sa_all$lowerSA1), c(NA, forest_plot_sa_all$lowerSA2)),
@@ -457,8 +457,8 @@ dev.off()
 
 # 06_Sensitivity analysis: Migration certainty (full cohort) forest plot -----
 
-load(file="filepath/glm_migcertainty.Rdata")
-load(file="filepath/multivariable_migcertainty_allages.Rdata")
+load(file="filepath")
+load(file="filepath")
 
 # Definite migrants vs non-migrants
 # Unadjusted
@@ -504,7 +504,7 @@ tabletext <- list(
   c("95% CI", sfrac(forest_plot_sa_all_migcert$ciDef, forest_plot_sa_all_migcert$ciProb, data = forest_plot_sa_all_migcert)))
 
 dev.new()
-png(file = "filepath/forest_plots_sensitivity_analyses_migcertainty.png", width = 2000, height = 800)
+png(file = "filepath", width = 2000, height = 800)
 forest_plot_SA <- forestplot(tabletext, 
                              mean = cbind(c(NA, forest_plot_sa_all_migcert$estimateDef), c(NA, forest_plot_sa_all_migcert$estimateProb)),
                              lower = cbind(c(NA, forest_plot_sa_all_migcert$lowerDef), c(NA, forest_plot_sa_all_migcert$lowerProb)),
