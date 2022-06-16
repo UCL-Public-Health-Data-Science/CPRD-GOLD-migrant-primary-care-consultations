@@ -21,14 +21,14 @@ setwd("filepath")
 ## 0_Load datasets and functions ------------------------------------------------------
 
 # Datasets
-load(file = "filepath/England_2015_2020_aggregate_weekly_conscounts.Rdata")
-load(file = "filepath/England_2015_2020_aggregate_weekly_conscounts_agesubcohort.Rdata")
-load(file = "filepath/London_2015_2020_aggregate_weekly_conscounts.Rdata")
-load(file = "filepath/England_2015_2020_aggregate_weekly_conscounts_ethnicity.Rdata")
-load(file = "filepath/England_2015_2020_aggregate_weekly_conscounts_migstatus_ethnicity.Rdata")
-load(file = "filepath/England_2015_2020_aggregate_weekly_conscounts_ds.Rdata")
-load(file = "filepath/England_2015_2020_aggregate_weekly_conscounts_migcertainty.Rdata")
-load(file = "filepath/England_2015_2020_aggregate_weekly_conscounts_migcertainty_agesubcohort.Rdata")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
 
 # Functions
 
@@ -136,7 +136,7 @@ full_model_nb_F2F <- glm.nb(facetoface ~ offset(log(person_years))+ studyweek + 
                             data = filter(England_weekly_conscounts_migstatus_ethnicity_ap_F2F, !is.na(lockdown1)))
 round(ci.lin(full_model_nb_F2F,Exp=T),3)
 extract_glm_results_allages(full_model_nb_F2F, 'migstatus_ethnicity_F2F_incladjustmentperiod_nolaggedresiduals', England_weekly_conscounts_migstatus_ethnicity_ap_F2F, 'lockdown1')
-write.csv(migstatus_ethnicity_F2F_incladjustmentperiod_nolaggedresiduals, "filepath/migstatus_ethnicity_F2F_incladjustmentperiod_nolaggedresiduals.csv" )
+write.csv(migstatus_ethnicity_F2F_incladjustmentperiod_nolaggedresiduals, "filepath" )
 
 ## Calculate lagged residuals
 lagresiduals_m <- lag(residuals(full_model_nb_F2F)) %>% as.numeric()
@@ -147,7 +147,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 ### Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_F2F, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p<0.05, so evidence of autocorrelation 
+Box.test(response_res, type = 'Ljung-Box')
 
 ## Merge lagged residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(England_weekly_conscounts_migstatus_ethnicity_ap_F2F, !is.na(lockdown1)),
@@ -164,7 +164,7 @@ final_model_nb_F2F_lr <- glm.nb(facetoface ~ offset(log(person_years)) + studywe
                                 data =  filter(England_weekly_conscounts_migstatus_ethnicity_ap_F2F, !is.na(lockdown1)))
 round(ci.lin(final_model_nb_F2F_lr,Exp=T),3)
 extract_glm_results_allages(final_model_nb_F2F_lr, 'migstatus_ethnicity_F2F_incladjustmentperiod_laggedresiduals', England_weekly_conscounts_migstatus_ethnicity_ap_F2F, 'lockdown1')
-write.csv(migstatus_ethnicity_F2F_incladjustmentperiod_laggedresiduals, "filepath/migstatus_ethnicity_F2F_incladjustmentperiod_laggedresiduals.csv" )
+write.csv(migstatus_ethnicity_F2F_incladjustmentperiod_laggedresiduals, "filepath" )
 
 ## Re-check for autocorrelation
 res2 <- residuals(final_model_nb_F2F_lr, type = 'response')
@@ -172,7 +172,7 @@ pacf(res2, lag = 312)
 acf(res2,lag = 312)
 ### Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_F2F_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p>0.05
+Box.test(response_res, type = 'Ljung-Box') 
 
 ##  Make predictions
 prediction_data <- England_weekly_conscounts_migstatus_ethnicity_ap_F2F
@@ -237,7 +237,7 @@ F2F_cons_migstatus_ethnicity_nb <- outcome_plot_nb %>%
   facet_wrap(~tidy_ethnicat6_name, dir = 'h', nrow = 2)
 
 F2F_cons_migstatus_ethnicity_nb
-ggsave('filepath/F2F_cons_migstatus_ethnicity_nb.png')
+ggsave('filepath')
 
 # 1e_Get rate ratios -----
 
@@ -318,7 +318,7 @@ F2Fcons_migstatus_ethnicity_RRs_vsWBNMs <- bind_rows(post_lockdown_WBvsWBNM, pos
                                                      post_lockdown_AsianvsWBNM, post_lockdown_BlackvsWBNM, post_lockdown_OthervsWBNM,
                                                      post_lockdown_UnknownvsWBNM)
 row.names(F2Fcons_migstatus_ethnicity_RRs_vsWBNMs) <- NULL
-write.csv(F2Fcons_migstatus_ethnicity_RRs_vsWBNMs, "filepath/F2Fcons_migstatus_ethnicity_RRs_vsWBNMs.csv" )
+write.csv(F2Fcons_migstatus_ethnicity_RRs_vsWBNMs, "filepath" )
 
 ## Prepare data for forest plot
 
@@ -405,7 +405,7 @@ F2Fcons_migstatus_ethnicity_RRs_vsNMs <- bind_rows(post_lockdown_WBvsNM, post_lo
                                                    post_lockdown_AsianvsNM, post_lockdown_BlackvsNM, post_lockdown_OthervsNM,
                                                    post_lockdown_UnknownvsNM)
 row.names(F2Fcons_migstatus_ethnicity_RRs_vsNMs) <- NULL
-write.csv(F2Fcons_migstatus_ethnicity_RRs_vsNMs, "filepath/F2Fcons_migstatus_ethnicity_RRs_vsNMs.csv")
+write.csv(F2Fcons_migstatus_ethnicity_RRs_vsNMs, "filepath")
 
 
 # 1f_Segmented regression model: Phone consultations -----
@@ -415,7 +415,7 @@ full_model_nb_phone <- glm.nb(phone ~ offset(log(person_years))+ studyweek + as.
                               data = filter(England_weekly_conscounts_migstatus_ethnicity_ap_phone, !is.na(lockdown1)))
 round(ci.lin(full_model_nb_phone,Exp=T),3)
 extract_glm_results_allages(full_model_nb_phone, 'migstatus_ethnicity_phone_incladjustmentperiod_nolaggedresiduals', England_weekly_conscounts_migstatus_ethnicity_ap_phone, 'lockdown1')
-write.csv(migstatus_ethnicity_phone_incladjustmentperiod_nolaggedresiduals, "filepath/migstatus_ethnicity_phone_incladjustmentperiod_nolaggedresiduals.csv" )
+write.csv(migstatus_ethnicity_phone_incladjustmentperiod_nolaggedresiduals, "filepath" )
 
 ## Calculate lagged residuals
 lagresiduals_m <- lag(residuals(full_model_nb_phone)) %>% as.numeric()
@@ -426,7 +426,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 ### Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_phone, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p<0.05, so evidence of autocorrelation 
+Box.test(response_res, type = 'Ljung-Box') 
 
 ## Merge lagged residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(England_weekly_conscounts_migstatus_ethnicity_ap_phone, !is.na(lockdown1)),
@@ -443,7 +443,7 @@ final_model_nb_phone_lr <- glm.nb(phone ~ offset(log(person_years)) + studyweek+
                                   data =  filter(England_weekly_conscounts_migstatus_ethnicity_ap_phone, !is.na(lockdown1)))
 round(ci.lin(final_model_nb_phone_lr,Exp=T),3)
 extract_glm_results_allages(final_model_nb_phone_lr, 'migstatus_ethnicity_phone_incladjustmentperiod_laggedresiduals', England_weekly_conscounts_migstatus_ethnicity_ap_phone, 'lockdown1')
-write.csv(migstatus_ethnicity_phone_incladjustmentperiod_laggedresiduals, "filepath/migstatus_ethnicity_phone_incladjustmentperiod_laggedresiduals.csv" )
+write.csv(migstatus_ethnicity_phone_incladjustmentperiod_laggedresiduals, "filepath" )
 
 ## Re-check for autocorrelation
 res2 <- residuals(final_model_nb_phone_lr, type = 'response')
@@ -451,7 +451,7 @@ pacf(res2, lag = 312)
 acf(res2,lag = 312)
 ### Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_phone_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p<0.05 - still evidence of autocorrelation 
+Box.test(response_res, type = 'Ljung-Box')
 
 ##  Make predictions
 prediction_data <- England_weekly_conscounts_migstatus_ethnicity_ap_phone
@@ -505,7 +505,7 @@ phone_cons_migstatus_ethnicity_nb <- ggplot(filter(outcome_plot_nb, date <= as.D
   facet_wrap(~ethnicat6)
 
 phone_cons_migstatus_ethnicity_nb
-ggsave('filepath/phone_cons_migstatus_ethnicity_nb.png')
+ggsave('filepath')
 
 # 1h_Get rate ratios -----
 
@@ -586,7 +586,7 @@ phonecons_migstatus_ethnicity_RRs_vsWBNMs <- bind_rows(post_lockdown_WBvsWBNM, p
                                                        post_lockdown_AsianvsWBNM, post_lockdown_BlackvsWBNM, post_lockdown_OthervsWBNM,
                                                        post_lockdown_UnknownvsWBNM)
 row.names(phonecons_migstatus_ethnicity_RRs_vsWBNMs) <- NULL
-write.csv(phonecons_migstatus_ethnicity_RRs_vsWBNMs, "filepath/phonecons_migstatus_ethnicity_RRs_vsWBNMs.csv" )
+write.csv(phonecons_migstatus_ethnicity_RRs_vsWBNMs, "filepath" )
 
 ## Prepare data for forest plot
 
@@ -673,7 +673,7 @@ phonecons_migstatus_ethnicity_RRs_vsNMs <- bind_rows(post_lockdown_WBvsNM, post_
                                                      post_lockdown_AsianvsNM, post_lockdown_BlackvsNM, post_lockdown_OthervsNM,
                                                      post_lockdown_UnknownvsNM)
 row.names(phonecons_migstatus_ethnicity_RRs_vsNMs) <- NULL
-write.csv(phonecons_migstatus_ethnicity_RRs_vsNMs, "filepath/phonecons_migstatus_ethnicity_RRs_vsNMs.csv")
+write.csv(phonecons_migstatus_ethnicity_RRs_vsNMs, "filepath")
 
 # Prepare data for forest plot
 
@@ -703,7 +703,7 @@ forest_plot_migstatus_ethnicity <- forest_plot_migstatus_ethnicity %>%
   add_row(.before = 1) # Needs to come after creating the tabletext object so that there are equal number of rows in the labels and means
 
 dev.new()
-png(file = "S:/CALIBER_19_062R/01_gold/01_all_patients/results/01_Consultations/forest_plots/forest_plot_migstatus_ethnicity_phone.png", width = 6000, height = 3000)
+png(file = "filepath", width = 6000, height = 3000)
 forest_plot <- forestplot(tabletext, mean = forest_plot_migstatus_ethnicity$estimate, lower=forest_plot_migstatus_ethnicity$lower, upper=forest_plot_migstatus_ethnicity$upper,
                           graph.pos = (ncol(tabletext)-1),
                           clip = c(-2,2),
@@ -762,7 +762,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_F2F, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p < 0.05
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -785,7 +785,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_F2F_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -844,7 +844,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 F2Fcons_RRs_0_15years <- bind_rows(effect_of_lockdown_cons_F2F, post_lockdown_migrant_status)
 rownames(F2Fcons_RRs_0_15years) <- NULL
-write.csv(F2Fcons_RRs_0_15years, "filepath/F2Fcons_RRs_0_15years.csv" )
+write.csv(F2Fcons_RRs_0_15years, "filepath" )
 
 # 2e_16-24 years ----
 
@@ -861,7 +861,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_F2F, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p<0.05
+Box.test(response_res, type = 'Ljung-Box')
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -885,7 +885,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_F2F_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p > 0.05 - accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -943,7 +943,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 F2Fcons_RRs_16_24years <- bind_rows(effect_of_lockdown_cons_F2F, post_lockdown_migrant_status)
 rownames(F2Fcons_RRs_16_24years) <- NULL
-write.csv(F2Fcons_RRs_16_24years, "filepath/F2Fcons_RRs_16_24years.csv" )
+write.csv(F2Fcons_RRs_16_24years, "filepath" )
 
 # 2f_25-34 years ----
 
@@ -960,7 +960,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_F2F, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p < 0.05
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -984,7 +984,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_F2F_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p > 0.05 -- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -1042,7 +1042,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 F2Fcons_RRs_25_34years <- bind_rows(effect_of_lockdown_cons_F2F, post_lockdown_migrant_status)
 rownames(F2Fcons_RRs_25_34years) <- NULL
-write.csv(F2Fcons_RRs_25_34years, "filepath/F2Fcons_RRs_25_34years.csv" )
+write.csv(F2Fcons_RRs_25_34years, "filepath" )
 
 # 2g_35-49 years ----
 
@@ -1059,7 +1059,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_F2F, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p<0.05
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -1083,7 +1083,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_F2F_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -1141,7 +1141,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 F2Fcons_RRs_35_49years <- bind_rows(effect_of_lockdown_cons_F2F, post_lockdown_migrant_status)
 rownames(F2Fcons_RRs_35_49years) <- NULL
-write.csv(F2Fcons_RRs_35_49years, "filepath/F2Fcons_RRs_35_49years.csv" )
+write.csv(F2Fcons_RRs_35_49years, "filepath" )
 
 # 2h_50-64 years ----
 
@@ -1158,7 +1158,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_F2F, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p<0.05
+Box.test(response_res, type = 'Ljung-Box')
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -1182,7 +1182,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_F2F_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box')  
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -1239,7 +1239,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 F2Fcons_RRs_50_64years <- bind_rows(effect_of_lockdown_cons_F2F, post_lockdown_migrant_status)
 rownames(F2Fcons_RRs_50_64years) <- NULL
-write.csv(F2Fcons_RRs_50_64years, "filepath/F2Fcons_RRs_50_64years.csv" )
+write.csv(F2Fcons_RRs_50_64years, "filepath" )
 
 # 2i_65+ years ----
 
@@ -1256,7 +1256,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_F2F, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p <0.005
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -1280,7 +1280,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_F2F_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p > 0.05 -- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -1338,7 +1338,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 F2Fcons_RRs_65plusyears <- bind_rows(effect_of_lockdown_cons_F2F, post_lockdown_migrant_status)
 rownames(F2Fcons_RRs_65plusyears) <- NULL
-write.csv(F2Fcons_RRs_65plusyears, "filepath/F2Fcons_RRs_65plusyears.csv")
+write.csv(F2Fcons_RRs_65plusyears, "filepath")
 
 # 2j_Segmented regression model: Phone consultations (not included in paper) ----
 
@@ -1356,7 +1356,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_phone, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p < 0.05
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -1379,7 +1379,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_phone_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -1437,7 +1437,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 phonecons_RRs_0_15years <- bind_rows(effect_of_lockdown_cons_phone, post_lockdown_migrant_status)
 rownames(phonecons_RRs_0_15years) <- NULL
-write.csv(phonecons_RRs_0_15years, "filepath/phonecons_RRs_0_15years.csv" )
+write.csv(phonecons_RRs_0_15years, "filepath" )
 
 # 2l_16-24 years ----
 
@@ -1454,7 +1454,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_phone, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p<0.05
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -1478,7 +1478,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_phone_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p > 0.05 - accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box')
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -1536,7 +1536,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 phonecons_RRs_16_24years <- bind_rows(effect_of_lockdown_cons_phone, post_lockdown_migrant_status)
 rownames(phonecons_RRs_16_24years) <- NULL
-write.csv(phonecons_RRs_16_24years, "filepath/phonecons_RRs_16_24years.csv" )
+write.csv(phonecons_RRs_16_24years, "filepath" )
 
 # 2m_25-34 years ----
 
@@ -1553,7 +1553,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_phone, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p < 0.05
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -1577,7 +1577,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_phone_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p > 0.05 -- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -1635,7 +1635,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 phonecons_RRs_25_34years <- bind_rows(effect_of_lockdown_cons_phone, post_lockdown_migrant_status)
 rownames(phonecons_RRs_25_34years) <- NULL
-write.csv(phonecons_RRs_25_34years, "filepath/phonecons_RRs_25_34years.csv" )
+write.csv(phonecons_RRs_25_34years, "filepath" )
 
 # 2n_35-49 years ----
 
@@ -1652,7 +1652,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_phone, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p<0.05
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -1676,7 +1676,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_phone_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -1734,7 +1734,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 phonecons_RRs_35_49years <- bind_rows(effect_of_lockdown_cons_phone, post_lockdown_migrant_status)
 rownames(phonecons_RRs_35_49years) <- NULL
-write.csv(phonecons_RRs_35_49years, "filepath/phonecons_RRs_35_49years.csv" )
+write.csv(phonecons_RRs_35_49years, "filepath" )
 
 # 2o_50-64 years ----
 
@@ -1751,7 +1751,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_phone, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p<0.05
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -1775,7 +1775,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_phone_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -1833,7 +1833,7 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 phonecons_RRs_50_64years <- bind_rows(effect_of_lockdown_cons_phone, post_lockdown_migrant_status)
 rownames(phonecons_RRs_50_64years) <- NULL
-write.csv(phonecons_RRs_50_64years, "filepath/phonecons_RRs_50_64years.csv" )
+write.csv(phonecons_RRs_50_64years, "filepath" )
 
 # 2p_65+ years ----
 
@@ -1850,7 +1850,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_phone, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p <0.005
+Box.test(response_res, type = 'Ljung-Box') 
 
 # Merge lag residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(dataset, !is.na(lockdown1)),
@@ -1874,7 +1874,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_phone_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p > 0.05 -- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box')
 
 # Set up prediction dataset
 prediction_data <- dataset
@@ -1932,10 +1932,10 @@ post_lockdown_migrant_status <- post_lockdown_migrant_status %>%
 # Combine RRs and save
 phonecons_RRs_65plusyears <- bind_rows(effect_of_lockdown_cons_phone, post_lockdown_migrant_status)
 rownames(phonecons_RRs_65plusyears) <- NULL
-write.csv(phonecons_RRs_65plusyears, "filepath/phonecons_RRs_65plusyears.csv")
+write.csv(phonecons_RRs_65plusyears, "filepath")
 
 # 3_Check weekly counts of ethnicat6 factor levels to see if sufficient power to include ethnicity interaction -----
-load(file = "filepath/covid_alldata_weekly_records_2015_2020.Rdata")
+load(file = "filepath")
 test <- head(covid_alldata_weekly_records_2015_2020)
 
 size_ethnicat6groups_weeklydata <- covid_alldata_weekly_records_2015_2020 %>%
@@ -1954,13 +1954,13 @@ max_ethnicat6_count <- size_ethnicat6groups_weeklydata  %>%
 
 min_max_ethnicat6_weekly_counts <- bind_rows(min_ethnicat6_count, max_ethnicat6_count) %>%
   arrange(migrant_status)
-write.csv(min_max_ethnicat6_weekly_counts, "filepath/Ethnicat6_counts/min_max_ethnicat6_weekly_counts.csv" )
+write.csv(min_max_ethnicat6_weekly_counts, "filepath" )
 
 weekly_ethnicat6_counts <- ggplot(filter(size_ethnicat6groups_weeklydata, studyweek <310), mapping = aes(x = studyweek, y = count, color = ethnicat6)) +
   geom_line()+
   facet_wrap(~migrant_status)
 weekly_ethnicat6_counts
-ggsave('filepath/weekly_ethnicat6_counts.png')
+ggsave('filepath')
 
 # 4_Ethnicity-only model------
 
@@ -2003,7 +2003,7 @@ all_cons_IR_England_ethnicity <- ggplot() +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1))
 all_cons_IR_England_ethnicity
-ggsave('filepath/all_cons_IR_England_ethnicity.png')
+ggsave('filepath')
 
 ## Face-to-face consulations 
 F2F_cons_IR_England_ethnicity <-  ggplot() + 
@@ -2016,7 +2016,7 @@ F2F_cons_IR_England_ethnicity <-  ggplot() +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1))
 F2F_cons_IR_England_ethnicity
-ggsave('results/01_Consultations/its_analysis/F2F_cons_IR_England_ethnicity.png')
+ggsave('filepath')
 
 ## Phone consultations 
 phone_cons_IR_England_ethnicity <- ggplot() + 
@@ -2029,7 +2029,7 @@ phone_cons_IR_England_ethnicity <- ggplot() +
   theme_bw() +
   theme(axis.text.x = element_text(angle = 0, vjust = 0.5, hjust = 1))
 phone_cons_IR_England_ethnicity
-ggsave('filepath/phone_cons_IR_England_ethnicity.png')
+ggsave('filepath')
 
 # 4d_Segmented regression model: All consultations -----
 
@@ -2038,7 +2038,7 @@ full_model_nb_all <- glm.nb(events ~ offset(log(person_years)) + lockdown1+ stud
                             data = filter(England_weekly_conscounts_ethnicity_ap_all, !is.na(lockdown1)))
 round(ci.lin(full_model_nb_all,Exp=T),3)
 extract_glm_results_allages(full_model_nb_all, 'ethnicity_all_incladjustmentperiod_nolaggedresiduals', England_weekly_conscounts_ethnicity_ap_all, 'lockdown1')
-write.csv(ethnicity_all_incladjustmentperiod_nolaggedresiduals, "filepath/ethnicity_all_incladjustmentperiod_nolaggedresiduals.csv" )
+write.csv(ethnicity_all_incladjustmentperiod_nolaggedresiduals, "filepath" )
 
 ## Calculate lagged residuals
 lagresiduals_m <- lag(residuals(full_model_nb_all)) %>% as.numeric()
@@ -2049,7 +2049,7 @@ pacf(res, lag = 368)
 acf(res,lag = 368)
 ### Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(full_model_nb_all, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p<0.05, so evidence of autocorrelation 
+Box.test(response_res, type = 'Ljung-Box') 
 
 ## Merge lagged residuals with dataframe
 lagres_timing <- bind_cols('studyweek' = filter(England_weekly_conscounts_ethnicity_ap_all, !is.na(lockdown1)),
@@ -2066,7 +2066,7 @@ final_model_nb_all_lr <- glm.nb(events ~ offset(log(person_years)) + lockdown1 +
                                 data =  filter(England_weekly_conscounts_ethnicity_ap_all, !is.na(lockdown1)))
 round(ci.lin(final_model_nb_all_lr,Exp=T),3)
 extract_glm_results_allages(final_model_nb_all_lr, 'ethnicity_all_incladjustmentperiod_laggedresiduals', England_weekly_conscounts_ethnicity_ap_all, 'lockdown1')
-write.csv(ethnicity_all_incladjustmentperiod_laggedresiduals, "filepath/ethnicity_all_incladjustmentperiod_laggedresiduals.csv" )
+write.csv(ethnicity_all_incladjustmentperiod_laggedresiduals, "filepath" )
 
 ## Re-check for autocorrelation
 res2 <- residuals(final_model_nb_all_lr, type = 'response')
@@ -2074,7 +2074,7 @@ pacf(res2, lag = 312)
 acf(res2,lag = 312)
 ### Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05 accept null hypothesis that residuals are from a white noise series
+Box.test(response_res, type = 'Ljung-Box') 
 
 ##  Make predictions
 prediction_data <- England_weekly_conscounts_ethnicity_ap_all
@@ -2125,7 +2125,7 @@ all_cons_ethnicity_nb <- ggplot(filter(outcome_plot_nb, date <= as.Date('2020-06
         legend.title = element_blank())
 
 all_cons_ethnicity_nb
-ggsave('filepath/all_cons_ethnicity_nb.png')
+ggsave('filepath')
 
 all_cons_ethnicity_nb_grid <- ggplot(filter(outcome_plot_nb, date <= as.Date('2020-06-28') & date > as.Date('2019-12-29')), 
                                      aes(x = date, y = final_pred, ymin = final_low, ymax = final_upp)) +
@@ -2140,7 +2140,7 @@ all_cons_ethnicity_nb_grid <- ggplot(filter(outcome_plot_nb, date <= as.Date('20
   facet_wrap(~ethnicat6)
 
 all_cons_ethnicity_nb_grid
-ggsave('filepath/all_cons_ethnicity_nb_grid.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -2203,7 +2203,7 @@ post_lockdown_Unknown <- post_lockdown_Unknown %>%
 # Combine RRs and save
 allcons_ethnicity_RRs <- bind_rows(effect_of_lockdown_cons_all, post_lockdown_WNB, post_lockdown_Mixed, post_lockdown_Asian, post_lockdown_Black, post_lockdown_Other, post_lockdown_Unknown)
 row.names(allcons_ethnicity_RRs) <- NULL
-write.csv(allcons_ethnicity_RRs, "filepath/allcons_ethnicity_RRs.csv" )
+write.csv(allcons_ethnicity_RRs, "filepath" )
 
 # LRT to check overall significance of ethnicat6 coefficient
 ## No ethnicat6 in model
@@ -2265,7 +2265,7 @@ migcertainty_pop_size_agesubcohort <- ggplot(filter(test, migcertainty %in% c('D
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   facet_wrap(vars(migcertainty))
 migcertainty_pop_size_agesubcohort
-ggsave('filepath/migcertainty_pop_size_agesubcohort.png')
+ggsave('filepath')
 
 # Plot IRs 
 
@@ -2282,7 +2282,7 @@ all_cons_IR_England_migcertainty_agesubcohort <- ggplot(covid_weekly_conscounts_
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   facet_grid(rows = vars(age_subcohort))
 all_cons_IR_England_migcertainty_agesubcohort
-ggsave('filepath/all_cons_IR_England_migcertainty_agesubcohort.png')
+ggsave('filepath')
 
 # Face-to-face consulations 
 F2F_cons_IR_England_migcertainty_agesubcohort <- ggplot(covid_weekly_conscounts_England_migcertainty_agesubcohort_F2F, aes(x = date, y = incidence_rate)) +geom_point(aes(col = migcertainty))+
@@ -2296,7 +2296,7 @@ F2F_cons_IR_England_migcertainty_agesubcohort <- ggplot(covid_weekly_conscounts_
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   facet_grid(rows = vars(age_subcohort))
 F2F_cons_IR_England_migcertainty_agesubcohort
-ggsave('filepath/F2F_cons_IR_England_migcertainty_agesubcohort.png')
+ggsave('filepath')
 
 # Phone consultations 
 phone_cons_IR_England_migcertainty_agesubcohort <- ggplot(covid_weekly_conscounts_England_migcertainty_agesubcohort_phone, aes(x = date, y = incidence_rate)) +geom_point(aes(colour = migcertainty))+
@@ -2310,7 +2310,7 @@ phone_cons_IR_England_migcertainty_agesubcohort <- ggplot(covid_weekly_conscount
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) +
   facet_grid(rows = vars(age_subcohort))
 phone_cons_IR_England_migcertainty_agesubcohort
-ggsave('filepath/phone_cons_IR_England_migcertainty_agesubcohort.png')
+ggsave('filepath')
 
 # 5b_All consultations ----
 
@@ -2358,7 +2358,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p = 0.6291-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -2417,7 +2417,7 @@ all_cons_nb_migcertainty_0_15years <- ggplot(outcome_plot_nb, mapping = aes(x = 
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 all_cons_nb_migcertainty_0_15years
-ggsave('filepath/all_cons_nb_migcertainty_0_15years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -2452,7 +2452,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 allcons_RRs_migcertainty_0to15years <- bind_rows(effect_of_lockdown_cons_all_migcertainty,
                                                  post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(allcons_RRs_migcertainty_0to15years) = NULL
-write.csv(allcons_RRs_migcertainty_0to15years, "filepath/allcons_RRs_migcertainty_0to15years.csv" )
+write.csv(allcons_RRs_migcertainty_0to15years, "filepath" )
 
 # Format for tables markdown
 allcons_RRs_migcertainty_0to15years <- allcons_RRs_migcertainty_0to15years %>%
@@ -2499,7 +2499,7 @@ pacf(res2)
 acf(res2)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -2558,7 +2558,7 @@ all_cons_nb_migcertainty_16_24years <- ggplot(outcome_plot_nb, mapping = aes(x =
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 all_cons_nb_migcertainty_16_24years
-ggsave('filepath/all_cons_nb_migcertainty_16_24years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -2593,7 +2593,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 allcons_RRs_migcertainty_16to24years <- bind_rows(effect_of_lockdown_cons_all_migcertainty,
                                                   post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(allcons_RRs_migcertainty_16to24years) = NULL
-write.csv(allcons_RRs_migcertainty_16to24years, "filepath/allcons_RRs_migcertainty_16to24years.csv")
+write.csv(allcons_RRs_migcertainty_16to24years, "filepath")
 
 # Format for tables markdown
 allcons_RRs_migcertainty_16to24years <- allcons_RRs_migcertainty_16to24years %>%
@@ -2640,7 +2640,7 @@ pacf(res2)
 acf(res2)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box')
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -2699,7 +2699,7 @@ all_cons_nb_migcertainty_25_34years <- ggplot(outcome_plot_nb, mapping = aes(x =
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 all_cons_nb_migcertainty_25_34years
-ggsave('filepath/all_cons_nb_migcertainty_25_34years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -2734,7 +2734,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 allcons_RRs_migcertainty_25to34years <- bind_rows(effect_of_lockdown_cons_all_migcertainty,
                                                   post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(allcons_RRs_migcertainty_25to34years) = NULL
-write.csv(allcons_RRs_migcertainty_25to34years, "filepath/allcons_RRs_migcertainty_25to34years.csv")
+write.csv(allcons_RRs_migcertainty_25to34years, "filepath")
 
 # Format for tables markdown
 allcons_RRs_migcertainty_25to34years <- allcons_RRs_migcertainty_25to34years %>%
@@ -2781,7 +2781,7 @@ pacf(res2)
 acf(res2)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -2840,7 +2840,7 @@ all_cons_nb_migcertainty_35_49years <- ggplot(outcome_plot_nb, mapping = aes(x =
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 all_cons_nb_migcertainty_35_49years
-ggsave('filepath/all_cons_nb_migcertainty_35_49years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -2875,7 +2875,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 allcons_RRs_migcertainty_35to49years <- bind_rows(effect_of_lockdown_cons_all_migcertainty,
                                                   post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(allcons_RRs_migcertainty_35to49years) = NULL
-write.csv(allcons_RRs_migcertainty_35to49years, "filepath/allcons_RRs_migcertainty_35to49years.csv")
+write.csv(allcons_RRs_migcertainty_35to49years, "filepath")
 
 # Format for tables markdown
 allcons_RRs_migcertainty_35to49years <- allcons_RRs_migcertainty_35to49years %>%
@@ -2922,7 +2922,7 @@ pacf(res2)
 acf(res2)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -2981,7 +2981,7 @@ all_cons_nb_migcertainty_50_64years <- ggplot(outcome_plot_nb, mapping = aes(x =
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 all_cons_nb_migcertainty_50_64years
-ggsave('filepath/all_cons_nb_migcertainty_50_64years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -3016,7 +3016,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 allcons_RRs_migcertainty_50to64years <- bind_rows(effect_of_lockdown_cons_all_migcertainty,
                                                   post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(allcons_RRs_migcertainty_50to64years) = NULL
-write.csv(allcons_RRs_migcertainty_50to64years, "filepath/allcons_RRs_migcertainty_50to64years.csv")
+write.csv(allcons_RRs_migcertainty_50to64years, "filepath")
 
 # Format for tables markdown
 allcons_RRs_migcertainty_50to64years <- allcons_RRs_migcertainty_50to64years %>%
@@ -3063,7 +3063,7 @@ pacf(res2)
 acf(res2)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p >0.05-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -3122,7 +3122,7 @@ all_cons_nb_migcertainty_65plusyears <- ggplot(outcome_plot_nb, mapping = aes(x 
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 all_cons_nb_migcertainty_65plusyears
-ggsave('filepath/all_cons_nb_migcertainty_65plusyears.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -3157,7 +3157,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 allcons_RRs_migcertainty_65plusyears <- bind_rows(effect_of_lockdown_cons_all_migcertainty,
                                                   post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(allcons_RRs_migcertainty_65plusyears) = NULL
-write.csv(allcons_RRs_migcertainty_65plusyears, "filepath/allcons_RRs_migcertainty_65plusyears.csv")
+write.csv(allcons_RRs_migcertainty_65plusyears, "filepath")
 
 # Format for tables markdown
 allcons_RRs_migcertainty_65plusyears <- allcons_RRs_migcertainty_65plusyears %>%
@@ -3170,7 +3170,7 @@ RRs_agesubcohort_migcertainty <- bind_cols(allcons_RRs_migcertainty_0to15years, 
                                            allcons_RRs_migcertainty_35to49years, allcons_RRs_migcertainty_50to64years, allcons_RRs_migcertainty_65plusyears) %>%
   dplyr::select(`var...1`, group0to15, group16to24, group25to34, group35to49, group50to64, group65plus) %>%
   rename('Variable' = `var...1`)
-save(RRs_agesubcohort_migcertainty, file = 'filepath/RRs_agesubcohort_migcertainty.Rdata')
+save(RRs_agesubcohort_migcertainty, file = 'filepath')
 
 
 # 5d_Face-to-face consultations (not included in paper) ----
@@ -3214,7 +3214,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p = 0.6291-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box')
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -3273,7 +3273,7 @@ F2F_cons_nb_migcertainty_0_14years <- ggplot(outcome_plot_nb, mapping = aes(x = 
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 F2F_cons_nb_migcertainty_0_14years
-ggsave('filepath/F2F_cons_nb_migcertainty_0_14years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -3308,7 +3308,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 F2Fcons_RRs_migcertainty_0to14years <- bind_rows(effect_of_lockdown_cons_F2F_migcertainty,
                                                  post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(F2Fcons_RRs_migcertainty_0to14years) = NULL
-write.csv(F2Fcons_RRs_migcertainty_0to14years, "filepath/F2Fcons_RRs_migcertainty_0to14years.csv" )
+write.csv(F2Fcons_RRs_migcertainty_0to14years, "filepath" )
 
 # 15-24 years
 
@@ -3349,7 +3349,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p = 0.6291-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -3408,7 +3408,7 @@ F2F_cons_nb_migcertainty_15_24years <- ggplot(outcome_plot_nb, mapping = aes(x =
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 F2F_cons_nb_migcertainty_15_24years
-ggsave('results/01_Consultations/its_analysis/F2F_cons_nb_migcertainty_15_24years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -3443,7 +3443,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 F2Fcons_RRs_migcertainty_15to24years <- bind_rows(effect_of_lockdown_cons_F2F_migcertainty,
                                                   post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(F2Fcons_RRs_migcertainty_15to24years) = NULL
-write.csv(F2Fcons_RRs_migcertainty_15to24years, "filepath/F2Fcons_RRs_migcertainty_15to24years.csv")
+write.csv(F2Fcons_RRs_migcertainty_15to24years, "filepath")
 
 # 25-44 years 
 
@@ -3484,7 +3484,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p = 0.6291-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -3543,7 +3543,7 @@ F2F_cons_nb_migcertainty_25_44years <- ggplot(outcome_plot_nb, mapping = aes(x =
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 F2F_cons_nb_migcertainty_25_44years
-ggsave('filepath/F2F_cons_nb_migcertainty_25_44years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -3578,7 +3578,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 F2Fcons_RRs_migcertainty_25to44years <- bind_rows(effect_of_lockdown_cons_F2F_migcertainty,
                                                   post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(F2Fcons_RRs_migcertainty_25to44years) = NULL
-write.csv(F2Fcons_RRs_migcertainty_25to44years, "filepath/F2Fcons_RRs_migcertainty_25to44years.csv")
+write.csv(F2Fcons_RRs_migcertainty_25to44years, "filepath")
 
 # 45-64 years 
 
@@ -3619,7 +3619,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p = 0.6291-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box') 
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -3678,7 +3678,7 @@ F2F_cons_nb_migcertainty_45_64years <- ggplot(outcome_plot_nb, mapping = aes(x =
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 F2F_cons_nb_migcertainty_45_64years
-ggsave('filepath/F2F_cons_nb_migcertainty_45_64years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -3713,7 +3713,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 F2Fcons_RRs_migcertainty_45to64years <- bind_rows(effect_of_lockdown_cons_F2F_migcertainty,
                                                   post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(F2Fcons_RRs_migcertainty_45to64years) = NULL
-write.csv(F2Fcons_RRs_migcertainty_45to64years, "filepath/F2Fcons_RRs_migcertainty_45to64years.csv")
+write.csv(F2Fcons_RRs_migcertainty_45to64years, "filepath")
 
 # 65+ years 
 
@@ -3754,7 +3754,7 @@ pacf(res2, lag = 364)
 acf(res2,lag = 364)
 # Formal test for autocorrelation epirhandbook.com/time-series-and-outbreak-detection.html
 response_res <- residuals(final_model_nb_all_lr, type = 'response')
-Box.test(response_res, type = 'Ljung-Box') # p = 0.6291-- accept null hypothesis that residuals are from a white noise series 
+Box.test(response_res, type = 'Ljung-Box')
 
 prediction_data <- dataset
 prediction_data$lagres <- 0
@@ -3813,7 +3813,7 @@ F2F_cons_nb_migcertainty_65plusyears <- ggplot(outcome_plot_nb, mapping = aes(x 
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 F2F_cons_nb_migcertainty_65plusyears
-ggsave('filepath/F2F_cons_nb_migcertainty_65plusyears.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -3848,7 +3848,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 F2Fcons_RRs_migcertainty_65plusyears <- bind_rows(effect_of_lockdown_cons_F2F_migcertainty,
                                                   post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(F2Fcons_RRs_migcertainty_65plusyears) = NULL
-write.csv(F2Fcons_RRs_migcertainty_65plusyears, "filepath/F2Fcons_RRs_migcertainty_65plusyears.csv")
+write.csv(F2Fcons_RRs_migcertainty_65plusyears, "filepath")
 
 # 5e_Phone consultations (not included in paper) ----
 
@@ -3950,7 +3950,7 @@ phone_cons_nb_migcertainty_0to14years <- ggplot(outcome_plot_nb, mapping = aes(x
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 phone_cons_nb_migcertainty_0to14years
-ggsave('filepath/phone_cons_nb_migcertainty_0to14years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -3985,7 +3985,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 phonecons_RRs_migcertainty_0to14years <- bind_rows(effect_of_lockdown_cons_phone_migcertainty,
                                                    post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(phonecons_RRs_migcertainty_0to14years) = NULL
-write.csv(phonecons_RRs_migcertainty_0to14years, "filepath/phonecons_RRs_migcertainty_0to14years.csv")
+write.csv(phonecons_RRs_migcertainty_0to14years, "filepath")
 
 # 15-24 years 
 
@@ -4085,7 +4085,7 @@ phone_cons_nb_migcertainty_15to24years <- ggplot(outcome_plot_nb, mapping = aes(
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 phone_cons_nb_migcertainty_15to24years
-ggsave('filepath/phone_cons_nb_migcertainty_15to24years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -4120,7 +4120,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 phonecons_RRs_migcertainty_15to24years <- bind_rows(effect_of_lockdown_cons_phone_migcertainty,
                                                     post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(phonecons_RRs_migcertainty_15to24years) = NULL
-write.csv(phonecons_RRs_migcertainty_15to24years, "filepath/phonecons_RRs_migcertainty_15to24years.csv")
+write.csv(phonecons_RRs_migcertainty_15to24years, "filepath")
 
 # 25-44 years 
 
@@ -4255,7 +4255,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 phonecons_RRs_migcertainty_25to44years <- bind_rows(effect_of_lockdown_cons_phone_migcertainty,
                                                     post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(phonecons_RRs_migcertainty_25to44years) = NULL
-write.csv(phonecons_RRs_migcertainty_25to44years, "filepath/phonecons_RRs_migcertainty_25to44years.csv")
+write.csv(phonecons_RRs_migcertainty_25to44years, "filepath")
 
 # 45-64 years 
 
@@ -4355,7 +4355,7 @@ phone_cons_nb_migcertainty_45to64years <- ggplot(outcome_plot_nb, mapping = aes(
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 phone_cons_nb_migcertainty_45to64years
-ggsave('filepath/phone_cons_nb_migcertainty_45to64years.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -4490,7 +4490,7 @@ phone_cons_nb_migcertainty_65plusyears <- ggplot(outcome_plot_nb, mapping = aes(
   theme_bw() +
   theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
 phone_cons_nb_migcertainty_65plusyears
-ggsave('filepath/phone_cons_nb_migcertainty_65plusyears.png')
+ggsave('filepath')
 
 # Get rate ratios 
 
@@ -4525,7 +4525,7 @@ post_lockdown_migcertaintyProbable <- post_lockdown_migcertaintyProbable %>%
 phonecons_RRs_migcertainty_65plusyears <- bind_rows(effect_of_lockdown_cons_phone_migcertainty,
                                                     post_lockdown_migcertaintyDefinite, post_lockdown_migcertaintyProbable)
 row.names(phonecons_RRs_migcertainty_65plusyears) = NULL
-write.csv(phonecons_RRs_migcertainty_65plusyears, "filepath/phonecons_RRs_migcertainty_65plusyears.csv")
+write.csv(phonecons_RRs_migcertainty_65plusyears, "filepath")
 
 # 6_Model choice -----
 
