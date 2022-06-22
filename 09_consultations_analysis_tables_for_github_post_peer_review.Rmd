@@ -1,0 +1,395 @@
+---
+title: "Consultations paper tables (excluding baseline characteristics tables)"
+author: "Yamina Boukari / Claire Zhang"
+date: "`r Sys.Date()`"
+output: 
+  word_document:
+    reference_docx: reference_table_doc.docx
+---
+
+```{r setup, include=FALSE, quiet = TRUE, warning=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+```
+
+## Table SX: Crude consultations rates 2015-2020 by migration status and migration certainty
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+# Load files
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
+load(file = "filepath")
+# Format data ready for table
+IR_allpatients_overall_migstatus_studyyear$studyyear <- as.factor(IR_allpatients_overall_migstatus_studyyear$studyyear)
+IR_allpatients_overall_migcertainty_studyyear$studyyear <- as.factor(IR_allpatients_overall_migcertainty_studyyear$studyyear)
+IR_allpatients_overall_migcertainty_studyyear <- IR_allpatients_overall_migcertainty_studyyear %>%
+  filter(migcertainty %in% c('Definite', 'Probable')) %>%
+  rename(migrant_status = migcertainty)
+
+IR_allpatients_overall_migstatus <- IR_allpatients_overall_migstatus %>%
+  mutate(studyyear = '2015-2019') %>%
+  relocate(studyyear)
+IR_allpatients_overall_migcertainty <- IR_allpatients_overall_migcertainty %>%
+  mutate(studyyear = '2015-2019') %>%
+  relocate(studyyear) %>% 
+  filter(migcertainty %in% c('Definite', 'Probable')) %>%
+  rename(migrant_status = migcertainty)
+IR_allpatients_overall_migstatus$studyyear <- as.factor(IR_allpatients_overall_migstatus$studyyear)
+IR_allpatients_overall_migcertainty$studyyear <- as.factor(IR_allpatients_overall_migcertainty$studyyear)
+
+
+IRs_annual <- bind_rows(IR_allpatients_overall_migstatus, IR_allpatients_overall_migstatus_studyyear,
+                        IR_allpatients_overall_migcertainty, IR_allpatients_overall_migcertainty_studyyear) %>%
+  arrange(studyyear) %>%
+  dplyr::select(c(studyyear, migrant_status, ir_ci)) %>%
+  tidyr::pivot_wider(names_from = migrant_status, values_from = ir_ci) 
+
+# Make table
+IRs_annual <- flextable(IRs_annual)
+IRs_annual <- flextable::align(IRs_annual, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+IRs_annual
+```
+
+
+## Table SX: Crude consultations rates before and during the pandemic by migration status and migration certainty
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+load(file = "filepath")
+
+IRs_pandemic <- flextable(IRs_pandemic_combined)
+IRs_pandemic <- flextable::align(IRs_pandemic, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+IRs_pandemic
+```
+
+## Table SX: Consultation rate ratios from interrupted time-series analysis (5 January 2015 to 26 December 2020) for England
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+# Load data
+load(file = "filepath")
+
+RRs_England <- flextable(RRs_England)
+RRs_England <- flextable::align(RRs_England, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+RRs_England
+
+```
+
+## Table SX: Consultation rate ratios from interrupted time-series analysis (5 January 2015 to 26 December 2020) in England by age sub-group
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+# Load data
+load(file = "filepath")
+
+RRs_agesubcohort <- flextable(RRs_agesubcohort)
+RRs_agesubcohort <- flextable::align(RRs_agesubcohort, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+RRs_agesubcohort
+
+```
+
+## Table SX: Consultation rate ratios from interrupted time-series analysis (5 January 2015 to 26 December 2020) for London
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+# Load data
+load(file = "filepath")
+
+RRs_London <- flextable(RRs_London)
+RRs_London <- flextable::align(RRs_London, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+RRs_London
+
+```
+
+## Table SX: Effect modification by ethnicity for the effect of migration on consultation rates before versus during the pandemic (5 January 2015 to 26 December 2020) for England
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+# Load data
+load(file = "filepath")
+
+RRs_England_migstatus_ethnicity <- flextable(RRs_England_migstatus_ethnicity)
+RRs_England_migstatus_ethnicity <- flextable::align(RRs_England_migstatus_ethnicity, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+RRs_England_migstatus_ethnicity
+
+```
+
+## Table SX: Consultation rate ratios from interrupted time series sensitivity analysis for England by migration certainty (5 January 2015 to 26 December 2020)
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+# Load data
+load(file = "filepath")
+
+RRs_migcertainty <- flextable(RRs_migcertainty)
+RRs_migcertainty <- flextable::align(RRs_migcertainty, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+RRs_migcertainty
+
+```
+
+## Table SX: Consultation rate ratios from interrupted time series sensitivity analysis for England by migration certainty and age sub-group (5 January 2015 to 26 December 2020)
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+# Load data
+load(file = "filepath")
+
+RRs_agesubcohort_migcertainty <- flextable(RRs_agesubcohort_migcertainty)
+RRs_agesubcohort_migcertainty <- flextable::align(RRs_agesubcohort_migcertainty, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+RRs_agesubcohort_migcertainty
+
+```
+
+## Table SX: Consultation rate ratios from interrupted time-series analysis (5 January 2015 to 26 December 2020) for England in cohort matched on age and year at joining the CPRD Gold database
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+# Load data
+load(file = "filepath")
+
+RRs_England_SA <- flextable(RRs_England_SA)
+RRs_England_SA <- flextable::align(RRs_England_SA, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+RRs_England_SA
+
+```
+
+## Table SX: Effect modification by ethnicity for the effect of migration on pre-pandemic consultation rates
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE}
+# Load packages
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(flextable, tidyverse)
+
+# Set working directory
+setwd("filepath")
+
+
+load(file="filepath")
+load(file="filepath")
+
+# Add  'All' and 'White British' rows to RERI and multiplicative effect dataframe 
+int_effects_all_ethnicities <- int_effects_all_ethnicities %>%
+  mutate(across(where(is.numeric), ~ round(.,2))) %>%
+  mutate(RERI_CI = paste0(RERI, ' (', RERI_lower_CI, '-', RERI_upper_CI, ')'),
+         Multiplicative_CI = paste0(multiplicative_effect, ' (', mult_lower_CI, '-', mult_upper_CI, ')'))
+
+
+all <- data.frame(ethnicity = 'All', RERI_CI = NA, Multiplicative_CI = NA)
+white_british <- data.frame(ethnicity = 'White British', RERI_CI = NA, Multiplicative_CI = NA)
+
+int_effects_all_ethnicities <- bind_rows(white_british, int_effects_all_ethnicities, all) %>%
+  dplyr::select(Multiplicative_CI, RERI_CI)
+
+# Bind columns
+ethnicity_table <- bind_cols(ethnicity_table, int_effects_all_ethnicities)
+
+# Create table
+ethnicity_table_ft <- flextable(ethnicity_table) %>%
+  set_table_properties(layout = 'autofit')
+ethnicity_table_ft
+
+```
+
+
+## Table SX: Effect modification by ethnicity (18 categories) for the effect of migration on pre-pandemic consultation rates
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE}
+# Load packages
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(flextable, tidyverse)
+
+# Set working directory
+setwd("filepath")
+
+
+load(file="filepath")
+load(file="filepath")
+
+# Add  'All' and 'White British' rows to RERI and multiplicative effect dataframe 
+int_effects_all_ethnicat18 <- int_effects_all_ethnicat18 %>%
+  mutate(across(where(is.numeric), ~ round(.,2))) %>%
+  mutate(RERI_CI = paste0(RERI, ' (', RERI_lower_CI, '-', RERI_upper_CI, ')'),
+         Multiplicative_CI = paste0(multiplicative_effect, ' (', mult_lower_CI, '-', mult_upper_CI, ')'))
+
+white_british <- data.frame(ethnicity = 'White British', RERI_CI = NA, Multiplicative_CI = NA)
+
+int_effects_all_ethnicat18 <- bind_rows(white_british, int_effects_all_ethnicat18) %>%
+  dplyr::select(Multiplicative_CI, RERI_CI)
+
+# Bind columns
+ethnicity_table <- bind_cols(ethnicity_table, int_effects_all_ethnicat18)
+
+# Create table
+ethnicity_table_ft <- flextable(ethnicity_table) %>%
+  set_table_properties(layout = 'autofit')
+ethnicity_table_ft
+
+```
+
+## Table SX: Effect modification by ethnicity (18 category) for the effect of migration on consultation rates before versus during the pandemic (5 January 2015 to 26 December 2020) for England
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+# Load data
+load(file = "filepath")
+
+RRs_England_migstatus_ethnicity18cat <- flextable(RRs_England_migstatus_ethnicity18cat)
+RRs_England_migstatus_ethnicity18cat <- flextable::align(RRs_England_migstatus_ethnicity18cat, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+RRs_England_migstatus_ethnicity18cat
+
+```
+
+## Table SX: Consultation rate ratios from interrupted time-series analysis (5 January 2015 to 26 December 2020) for England in cohort matched on age at study start and gender only (SA2)
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+# Load data
+load(file = "filepath")
+
+RRs_England_SA2 <- flextable(RRs_England_SA2)
+RRs_England_SA2 <- flextable::align(RRs_England_SA2, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+RRs_England_SA2
+
+```
+
+## Table SX: Consultation rate ratios from interrupted time-series analysis (5 January 2015 to 26 December 2020) for England in cohort matched on age at study start, practice region and gender only (SA3)
+
+```{r echo=FALSE, message = FALSE, quiet=TRUE, warning=FALSE}
+
+# Load packages ----
+if (!require('pacman')) install.packages('pacman')
+pacman::p_load(tidyverse,lubridate, Hmisc, epitools, data.table, epiR, flextable,
+               gtsummary)
+
+# Set working directory ----
+setwd("filepath")
+
+# Load data
+load(file = "filepath")
+
+RRs_England_SA3 <- flextable(RRs_England_SA3)
+RRs_England_SA3 <- flextable::align(RRs_England_SA3, align = 'center', part = 'header')%>%
+  flextable::set_table_properties(layout = 'autofit')
+
+RRs_England_SA3
+
+```
+
